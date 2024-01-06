@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link
+         rel="apple-touch-icon"
+         href="{% static 'shop/img/apple-icon.png' %}"
+      />
+      <link
+         rel="shortcut icon"
+         type="image/x-icon"
+         href="{% static 'shop/img/favicon.ico' %}"
+      />
+
+      <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" />
+      <link rel="stylesheet" href="{% static 'shop/css/templatemo.css' %}" />
+      <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}" />
+      <link
+         rel="stylesheet"
+         href="{% static 'shop/css/fontawesome.min.css' %}"
+      />
+
+      <!-- Load fonts style after rendering the layout styles -->
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
+      />
+      <title>cart</title>
+   </head>
+   <body>
+      {% include 'shop/includes/navbar.html' %}
+
+      <section class="pt-5 pb-5">
+         <div class="container">
+            <div class="row w-100 mx-auto">
+               <div class="col-lg-10 col-md-12 col-12 mx-auto">
+                  <h3 class="display-6 mb-1 text-center">
+                     Tank You For Shopping
+                  </h3>
+                  <p class="mb-3 text-center">
+                     <i class="text-info"> your order confirm successfully </i>
+                  </p>
+               </div>
+            </div>
+
+            <div
+               class="row d-flex align-items-center justify-content-center mt-5"
+            >
+               <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-center">
+                  <a href="{% url 'shop:home_page' %}">
+                     <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a
+                  >
+               </div>
+            </div>
+         </div>
+      </section>
+   </body>
+</html>
