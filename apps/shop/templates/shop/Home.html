@@ -1,0 +1,330 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link
+         rel="icon"
+         type="image/x-icon"
+         href="{% static 'images/logo-8.png' %}"
+         style="border-radius: 50%"
+      />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Medium.ttf' %}");
+         }
+      </style>
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
+
+      <title></title>
+   </head>
+
+   <body>
+      <!-- include Navbar -->
+      {% include 'navbar.html' %}
+      <!-- end include -->
+
+      <!-- Start banner Hero -->
+      <div
+         id="carouseAutoplayingBanner"
+         class="carousel slide"
+         data-bs-ride="carousel"
+         style="max-height: 60vh"
+      >
+         <div class="carousel-indicators">
+            <button
+               class="active circle-point"
+               type="button"
+               data-bs-target="#carouseAutoplayingBanner"
+               data-bs-slide-to="0"
+               aria-current="true"
+               aria-label="Slide 1"
+            ></button>
+            <button
+               class="circle-point"
+               type="button"
+               data-bs-target="#carouseAutoplayingBanner"
+               data-bs-slide-to="1"
+               aria-label="Slide 2"
+            ></button>
+            <button
+               class="circle-point"
+               type="button"
+               data-bs-target="#carouseAutoplayingBanner"
+               data-bs-slide-to="2"
+               aria-label="Slide 3"
+            ></button>
+            <style>
+               .circle-point {
+                  width: 10px !important;
+                  height: 10px !important;
+                  border: 5px solid white;
+                  border-radius: 50%;
+                  overflow: hidden !important;
+                  margin: 0 10px !important;
+               }
+            </style>
+         </div>
+
+         <div
+            class="carousel-inner"
+            style="height: 100%; width: 100%; max-height: 60vh"
+         >
+            {% for banner in banner_list %}
+            <div
+               class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}"
+               style="height: 100%; max-height: 60vh"
+            >
+               <img
+                  src="{{ banner.cover }}"
+                  class=""
+                  alt="photo"
+                  style="
+                     height: 100%;
+                     width: 100%;
+                     max-height: 60vh;
+                     object-fit: cover;
+                     object-position: top center;
+                  "
+               />
+               <div class="carousel-caption d-none d-md-block">
+                  <h5>{{ banner.title }}</h5>
+                  <p>{{ banner.description }}</p>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
+
+         <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouseAutoplayingBanner"
+            data-bs-slide="prev"
+         >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+         </button>
+
+         <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouseAutoplayingBanner"
+            data-bs-slide="next"
+         >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+         </button>
+      </div>
+      <!-- End Banner Hero -->
+
+      <!-- Start Categories -->
+      <section class="container" style="font-family: Nahid">
+         <div class="text-center pt-3">
+            <h1 class="h2" style="font-family: Shabnam">
+               دسته بندی های پرفروش
+            </h1>
+         </div>
+
+         <div class="row justify-content-center">
+            {% for category in categories %}
+
+            <div class="col-6 col-md-3 col-lg-2 p-3 mt-2">
+               <a href="{% url 'shop:product_list' %}">
+                  <img
+                     src="{{ category.cover.url }}"
+                     class="rounded-circle img-fluid border"
+                     style="aspect-ratio: 1; object-fit: cover"
+                  />
+               </a>
+               <h3 class="text-center mt-3 mb-3">
+                  <a href="{% url 'shop:product_list' %}" class="fs-5">
+                     {{ category.title }}
+                  </a>
+               </h3>
+            </div>
+
+            {% endfor %}
+         </div>
+      </section>
+      <!-- End Categories -->
+
+      <!-- Start Featured Product -->
+      <section class="container-fluid bg-light pb-3" style="font-family: Nahid">
+         <div class="d-flex align-items-center">
+            <h3 class="py-3" class="h2" style="font-family: Samim">
+               محصولات ویژه
+            </h3>
+            <a class="p-1 mx-5" href="{% url 'shop:product_list' %}">
+               دیدن موارد بیشتر
+            </a>
+         </div>
+
+         <div class="row justify-content-center">
+            {% for featured in featured_list %}
+
+            <div
+               class="col-6 col-sm-4 col-ms-3 col-lg-3 col-xl-2 mb-3"
+               style="max-width: 250px"
+            >
+               <div class="h-100">
+                  <a
+                     href="{% url 'shop:product_detail' featured.id featured.slug|slice:'0:50' %}"
+                  >
+                     <img
+                        src="{{ featured.cover.url }}"
+                        class="card-img-top"
+                        alt="{{ featured.title }}"
+                        style="
+                           aspect-ratio: 1;
+                           object-fit: cover;
+                           object-position: top center;
+                        "
+                     />
+                  </a>
+                  <div class="p-2 m-0">
+                     <a
+                        href="{% url 'shop:product_detail' featured.id featured.slug|slice:'0:50' %}"
+                        class="text-decoration-none text-dark m-0"
+                     >
+                        {{ featured.title|slice:"0:44" }}...
+                     </a>
+                     <ul
+                        class="list-unstyled d-flex flex-column justify-content-between p-0 m-0"
+                     >
+                        <li
+                           class="d-flex justify-content-center align-items-center"
+                        >
+                           <span class="p-0 m-0"></span>
+                        </li>
+                        <li class="text-muted text-right">
+                           {{ featured.price }}
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+
+            {% endfor %}
+         </div>
+      </section>
+      <!-- End Featured Product -->
+
+      <!-- Start off Product -->
+      <section class="container-fluid mb-2" style="font-family: Nahid">
+         <div class="d-flex py-3">
+            <h3 class="p-1" class="h2" style="font-family: Samim">
+               تخفیف خورده ها
+            </h3>
+            <a class="p-1 mx-5" href="{% url 'shop:product_list' %}">
+               دیدن موارد بیشتر
+            </a>
+         </div>
+
+         <div class="row justify-content-center">
+            {% for featured in featured_list %}
+
+            <div
+               class="col-6 col-sm-4 col-ms-3 col-lg-3 col-xl-2 mb-3"
+               style="max-width: 250px"
+            >
+               <a
+                  href="{% url 'shop:product_detail' featured.id featured.slug|slice:'0:50' %}"
+               >
+                  <img
+                     src="{{ featured.cover.url }}"
+                     class="card-img-top"
+                     alt="{{ featured.title }}"
+                     style="
+                        aspect-ratio: 1;
+                        object-fit: cover;
+                        object-position: top center;
+                     "
+                  />
+               </a>
+               <div class="card-body p-2 m-0">
+                  <a
+                     href="{% url 'shop:product_detail' featured.id featured.slug|slice:'0:50' %}"
+                     class="text-decoration-none text-dark m-0"
+                  >
+                     {{ featured.title|slice:"0:44" }}...
+                  </a>
+                  <ul
+                     class="list-unstyled d-flex flex-column justify-content-between p-0 m-0"
+                  >
+                     <li
+                        class="d-flex justify-content-center align-items-center"
+                     >
+                        <span class="p-0 m-0"></span>
+                     </li>
+                     <li class="text-muted text-right">{{ featured.price }}</li>
+                  </ul>
+               </div>
+            </div>
+
+            {% endfor %}
+         </div>
+      </section>
+      <!-- End off -->
+
+      <!-- start best seller -->
+      <section class="container-fluid bg-light mb-3" style="font-family: Nahid">
+         <div class="d-flex py-3">
+            <h3 class="p-1" class="h4" style="font-family: Samim">
+               پرفروش ترین محصولات
+            </h3>
+            <a class="p-1 mx-5" href="{% url 'shop:product_list' %}">
+               دیدن موارد بیشتر
+            </a>
+         </div>
+
+         <div class="row justify-content-center">
+            {% for featured in featured_list %}
+
+            <div
+               class="col-6 col-sm-4 col-ms-3 col-lg-3 col-xl-2 mb-3"
+               style="max-width: 220px"
+            >
+               <div class="">
+                  <a
+                     href="{% url 'shop:product_detail' featured.id featured.slug|slice:'0:50' %}"
+                  >
+                     <img
+                        src="{{ featured.cover.url }}"
+                        class="card-img-top"
+                        alt="{{ featured.title }}"
+                        style="
+                           aspect-ratio: 1;
+                           object-fit: cover;
+                           object-position: top center;
+                        "
+                     />
+                  </a>
+               </div>
+            </div>
+
+            {% endfor %}
+         </div>
+      </section>
+      <!-- End best seller -->
+
+      <!-- Start Footer -->
+      {% include 'footer.html' %}
+
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+   </body>
+</html>

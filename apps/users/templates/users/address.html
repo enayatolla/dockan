@@ -1,0 +1,338 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
+      <link rel="stylesheet" href="{% static 'users/css/input-forms.css' %}" />
+
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Medium.ttf' %}");
+         }
+         @font-face {
+            font-family: SamimBold;
+            src: url("{% static 'fonts/Samim-Bold-FD.ttf' %}");
+         }
+      </style>
+      <title>مشخصات کاربر</title>
+   </head>
+
+   <body class="py-1">
+      <!-- progres bar -->
+      <div
+         class="col-12 col-md-10 mx-auto mt-4 mb-4"
+         style="font-family: Samim"
+      >
+         <span>صفحه اصلی</span>
+         <span>
+            <svg
+               xmlns="http://www.w3.org/2000/svg"
+               width="16"
+               height="16"
+               fill="currentColor"
+               class="bi bi-chevron-left"
+               viewBox="0 0 16 16"
+            >
+               <path
+                  fill-rule="evenodd"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+               />
+            </svg>
+         </span>
+         <span>حساب کاربری</span>
+         <span>
+            <svg
+               xmlns="http://www.w3.org/2000/svg"
+               width="16"
+               height="16"
+               fill="currentColor"
+               class="bi bi-chevron-left"
+               viewBox="0 0 16 16"
+            >
+               <path
+                  fill-rule="evenodd"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+               />
+            </svg>
+         </span>
+         <span>آدرس ها</span>
+      </div>
+
+      <section class="container" style="font-family: Nahid">
+         <div class="row col-12 col-md-11 col-lg-12 mx-auto">
+            <!-- Button trigger modal -->
+            <div
+               class="col-12 col-lg-4 col-xl-4 py-1 px-0 px-sm-2"
+               style="height: 200px"
+            >
+               <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdropNewAddressModal"
+                  class="border border-2 rounded-2 d-flex align-items-center justify-content-center flex-column h-100 w-100"
+                  style="background-color: transparent"
+               >
+                  <div>
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        fill="grey"
+                        class="bi bi-plus-lg"
+                        viewBox="0 0 16 16"
+                     >
+                        <path
+                           fill-rule="evenodd"
+                           d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                        />
+                     </svg>
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="60"
+                        height="60"
+                        fill="grey"
+                        class="bi bi-geo-alt"
+                        viewBox="0 0 16 16"
+                     >
+                        <path
+                           d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"
+                        />
+                        <path
+                           d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                        />
+                     </svg>
+                  </div>
+                  <p class="mt-2">افزودن آدرس جدید</p>
+               </button>
+            </div>
+
+            <!-- address -->
+            {% for addr in request.user.addresses.all %}
+            <div
+               id="{{ addr.id }}"
+               class="col-12 col-md-6 col-lg-4 col-xl-4 py-1 px-0 px-sm-2 addressItem"
+               style="height: 200px"
+            >
+               <div
+                  class="border border-2 rounded-2 d-flex flex-row align-items-center px-3 py-1 h-100 position-relative"
+               >
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="30"
+                     height="30"
+                     fill="grey"
+                     class="bi bi-geo-alt"
+                     viewBox="0 0 16 16"
+                  >
+                     <path
+                        d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"
+                     />
+                     <path
+                        d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                     />
+                  </svg>
+
+                  <div class="ms-2">
+                     <div class="mb-1">
+                        <span class="me-3">استان</span>
+                        <span>{{ addr.province }}</span>
+                     </div>
+                     <div class="mb-1">
+                        <span class="me-3">شهر</span>
+                        <span>{{ addr.city }}</span>
+                     </div>
+                     <div class="mb-1">
+                        <span class="me-3">آدرس</span>
+                        <span>{{ addr.address }}</span>
+                     </div>
+                     <div class="mb-1">
+                        <span class="me-3">خیابان نهایی</span>
+                        <span>{{ addr.last }}</span>
+                     </div>
+                     <div class="mb-1">
+                        <span class="me-3">تلفن</span>
+                        <span>{{ addr.phone }}</span>
+                     </div>
+                  </div>
+
+                  <button
+                     class="btn text-danger border border-danger"
+                     style="position: absolute; left: 25px; bottom: 5px"
+                     onclick="deleteAddress('{{ addr.id }}')"
+                  >
+                     حذف
+                  </button>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
+
+         <!-- Modal -->
+         <div
+            class="modal fade p-0"
+            id="staticBackdropNewAddressModal"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+         >
+            <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                        آدرس جدید
+                     </h1>
+                     <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                     ></button>
+                  </div>
+
+                  <div class="modal-body">
+                     <!------- Form ------->
+                     <form>
+                        <div id="addressTextGuide"></div>
+                        <label for="inp" class="inp">
+                           <input
+                              type="text"
+                              id="inputAddress-1"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">استان</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              type="text"
+                              id="inputAddress-2"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">شهر</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label
+                           for="inp"
+                           class="inp textarea"
+                           style="max-width: 765px"
+                        >
+                           <textarea
+                              id="inputAddress-3"
+                              placeholder="&nbsp;"
+                           ></textarea>
+                           <span class="label">آدرس</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              type="text"
+                              id="inputAddress-4"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">شماره منطقه</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              type="text"
+                              id="inputAddress-5"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">آخرین معبر</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              dir="ltr"
+                              type="text"
+                              id="inputAddress-6"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">پلاک</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              dir="ltr"
+                              type="text"
+                              id="inputAddress-7"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">کدپستی</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              dir="ltr"
+                              type="text"
+                              id="inputAddress-8"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">طبقه یا واحد</span>
+                           <span class="focus-bg"></span>
+                        </label>
+
+                        <label for="inp" class="inp">
+                           <input
+                              dir="ltr"
+                              type="text"
+                              id="inputAddress-9"
+                              placeholder="&nbsp;"
+                           />
+                           <span class="label">تلفن همراه</span>
+                           <span class="focus-bg"></span>
+                        </label>
+                     </form>
+                  </div>
+
+                  <div class="modal-footer">
+                     <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        data-bs-dismiss="modal"
+                     >
+                        بستن صفحه
+                     </button>
+                     <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="createAddress()"
+                     >
+                        افزودن آدرس جدید
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+      <script src="{% static 'users/js/handleAxios.js' %}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+   </body>
+</html>

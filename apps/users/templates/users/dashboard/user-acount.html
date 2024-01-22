@@ -1,0 +1,512 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Medium.ttf' %}");
+         }
+         @font-face {
+            font-family: SamimBold;
+            src: url("{% static 'fonts/Samim-Bold-FD.ttf' %}");
+         }
+      </style>
+      <title>مشخصات کاربر</title>
+   </head>
+
+   <body style="max-width: 100vw !important">
+      <section style="font-family: Samim" class="container p-1 py-4">
+         <div class="row mx-0" style="max-width: 100vw">
+            <!-- progres bar -->
+            <div class="col-12 mx-auto" style="font-family: Samim">
+               <span>صفحه اصلی</span>
+               <span>
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-chevron-left"
+                     viewBox="0 0 16 16"
+                  >
+                     <path
+                        fill-rule="evenodd"
+                        d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+                     />
+                  </svg>
+               </span>
+               <span>حساب کاربری</span>
+               <span>
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-chevron-left"
+                     viewBox="0 0 16 16"
+                  >
+                     <path
+                        fill-rule="evenodd"
+                        d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+                     />
+                  </svg>
+               </span>
+               <span>مشخصات کاربر</span>
+            </div>
+
+            <div
+               class="col-12 col-md-8 mx-auto mt-4 py-1 px-0"
+               style="font-family: Nahid"
+            >
+               <div class="bg-body-secondary py-3 ps-3 p-md-3">
+                  <!-- user information -->
+
+                  <div class="w-100 p-1 p-md-3 position-relative">
+                     <div>
+                        <span class="text-dark-emphasis fs-6">نام :</span>
+                        <span class="text-dark fs-4">
+                           {% if request.user.first_name %}
+                           <span id="FirstNameHTML"
+                              >{{ request.user.first_name }}</span
+                           >
+                           {% else %}
+                           <span>وارد نشده</span>
+                           {% endif %}
+                        </span>
+                     </div>
+
+                     <div>
+                        <span class="text-dark-emphasis fs-6"
+                           >نام خانوادگی :</span
+                        >
+                        <span class="text-dark fs-4">
+                           {% if request.user.last_name %}
+                           <span id="LastNameHTML"
+                              >{{ request.user.last_name }}</span
+                           >
+                           {% else %}
+                           <span>وارد نشده</span>
+                           {% endif %}
+                        </span>
+                     </div>
+
+                     <!-- Button trigger modal -->
+                     <span
+                        style="
+                           position: absolute;
+                           bottom: 20px;
+                           left: 5px;
+                           cursor: pointer;
+                        "
+                     >
+                        <button
+                           type="button"
+                           class="btn btn-icon p-0"
+                           data-bs-toggle="modal"
+                           data-bs-target="#FullNameChangerModal"
+                        >
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              fill="currentColor"
+                              class="bi bi-pencil-square"
+                              viewBox="0 0 16 16"
+                           >
+                              <path
+                                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                              />
+                           </svg>
+                        </button>
+                     </span>
+
+                     <!-- Modal -->
+                     <div
+                        class="modal fade"
+                        style="max-width: 100vw"
+                        id="FullNameChangerModal"
+                        data-bs-backdrop="static"
+                        data-bs-keyboard="false"
+                        tabindex="-1"
+                        aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true"
+                     >
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h1
+                                    class="modal-title fs-5"
+                                    id="staticBackdropLabel"
+                                 >
+                                    تغییر نام
+                                 </h1>
+                                 <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                 ></button>
+                              </div>
+                              <div class="modal-body">
+                                 <!-- Form -->
+                                 <form>
+                                    <div
+                                       class=""
+                                       id="nameChangeInputText"
+                                    ></div>
+
+                                    <div class="mb-3 row">
+                                       <label
+                                          for="inputFirstName"
+                                          class="col-sm-4 col-form-label"
+                                          >نام</label
+                                       >
+                                       <div class="col-sm-8">
+                                          <input
+                                             id="inputFirstName"
+                                             dir="rtl"
+                                             type="text"
+                                             class="form-control"
+                                             value="{{ request.user.first_name }}"
+                                          />
+                                       </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                       <label
+                                          for="inputLastName"
+                                          class="col-sm-4 col-form-label"
+                                          >نام خانوادگی</label
+                                       >
+                                       <div class="col-sm-8">
+                                          <input
+                                             id="inputLastName"
+                                             dir="rtl"
+                                             type="text"
+                                             class="form-control"
+                                             value="{{ request.user.last_name }}"
+                                          />
+                                       </div>
+                                    </div>
+
+                                    <button
+                                       type="button"
+                                       class="btn border-success text-success"
+                                       onclick="changeNameHandler()"
+                                    >
+                                       تغییر نام
+                                    </button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                 <button
+                                    type="button"
+                                    class="btn btn-outline-danger"
+                                    data-bs-dismiss="modal"
+                                 >
+                                    بستن پنجره
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="w-100 p-1 p-md-3 position-relative">
+                     <span class="text-dark-emphasis fs-6">تلفن همراه :</span>
+                     <span class="text-dark fs-4">
+                        {% if request.user.phone_number %}
+                        <span id="phoneNumberHTML"
+                           >{{ request.user.phone_number }}</span
+                        >
+                        {% else %}
+                        <span>وارد نشده</span>
+                        {% endif %}
+                     </span>
+
+                     <!-- Button phone modal -->
+                     <span
+                        style="
+                           position: absolute;
+                           bottom: 5px;
+                           left: 5px;
+                           cursor: pointer;
+                        "
+                     >
+                        <button
+                           type="button"
+                           class="btn btn-icon p-0"
+                           data-bs-toggle="modal"
+                           data-bs-target="#phoneChnageModal"
+                        >
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              fill="currentColor"
+                              class="bi bi-pencil-square"
+                              viewBox="0 0 16 16"
+                           >
+                              <path
+                                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                              />
+                           </svg>
+                        </button>
+                     </span>
+
+                     <!-- phone Modal -->
+                     <div
+                        class="modal fade"
+                        style="max-width: 100vw"
+                        id="phoneChnageModal"
+                        data-bs-backdrop="static"
+                        data-bs-keyboard="false"
+                        tabindex="-1"
+                        aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true"
+                     >
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h1
+                                    class="modal-title fs-5"
+                                    id="staticBackdropLabel"
+                                 >
+                                    تغییر تلفن
+                                 </h1>
+                                 <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                 ></button>
+                              </div>
+                              <div class="modal-body">
+                                 <form action="">
+                                    <!-- phone form -->
+                                    <input
+                                       id="inputOtpIdHolder"
+                                       type="hidden"
+                                    />
+
+                                    <div
+                                       class=""
+                                       id="otpRequestTextGuide"
+                                    ></div>
+
+                                    <div
+                                       class="mb-3 row"
+                                       id="phoneInputWrapper"
+                                    >
+                                       <label
+                                          for="InputphoneNumber"
+                                          class="col-sm-4 col-form-label"
+                                          >تلفن</label
+                                       >
+                                       <div class="col-sm-8">
+                                          <input
+                                             dir="ltr"
+                                             id="InputphoneNumber"
+                                             type="tel"
+                                             class="form-control"
+                                             id="inputPassword"
+                                             value="{% if request.user.phone_number == None %}{%else%}{{ request.user.phone_number }}{%endif%}"
+                                          />
+                                       </div>
+                                    </div>
+
+                                    <div
+                                       class="mb-3 row d-none"
+                                       id="otpCheckInputWrapper"
+                                    >
+                                       <label
+                                          for="InputOtpCode"
+                                          class="col-sm-4 col-form-label"
+                                          >رمز یکبار مصرف</label
+                                       >
+                                       <div class="col-sm-8">
+                                          <input
+                                             dir="ltr"
+                                             id="InputOtpCode"
+                                             type="number"
+                                             class="form-control"
+                                             id="inputPassword"
+                                             value=""
+                                          />
+                                       </div>
+                                    </div>
+
+                                    <button
+                                       id="otpRequestFormBtn"
+                                       type="button"
+                                       class="btn border-success text-success"
+                                       onclick="otpRequestHandler()"
+                                    >
+                                       دریافت کد یکبار مصرف
+                                    </button>
+                                    <button
+                                       id="otpCheckFormBtn"
+                                       type="button"
+                                       class="btn border-success text-success d-none"
+                                       onclick="otpCheckHandler()"
+                                    >
+                                       ارسال کد
+                                    </button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                 <button
+                                    type="button"
+                                    class="btn btn-outline-danger"
+                                    data-bs-dismiss="modal"
+                                 >
+                                    بستن پنجره
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div
+                     class="w-100 p-1 p-md-3 position-relative"
+                     style="max-width: 100vw"
+                  >
+                     <span class="text-dark-emphasis fs-6">آدرس ایمیل :</span>
+                     <span class="text-dark fs-5">
+                        {% if request.user.email == '' %}
+                        <span>وارد نشده</span> {% else %}
+                        <span>{{ request.user.email }}</span> {% endif %}
+                     </span>
+
+                     <!-- Button trigger modal -->
+                     <span
+                        style="
+                           position: absolute;
+                           bottom: 5px;
+                           left: 5px;
+                           cursor: pointer;
+                        "
+                     >
+                        <button
+                           type="button"
+                           class="btn btn-icon p-0"
+                           data-bs-toggle="modal"
+                           data-bs-target="#staticBackdrop"
+                        >
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              fill="currentColor"
+                              class="bi bi-pencil-square"
+                              viewBox="0 0 16 16"
+                           >
+                              <path
+                                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                              />
+                           </svg>
+                        </button>
+                     </span>
+
+                     <!-- Modal -->
+                     <div
+                        class="modal fade"
+                        style="max-width: 100vw"
+                        id="staticBackdrop"
+                        data-bs-backdrop="static"
+                        data-bs-keyboard="false"
+                        tabindex="-1"
+                        aria-labelledby="staticBackdropLabel"
+                        aria-hidden="true"
+                     >
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h1
+                                    class="modal-title fs-5"
+                                    id="staticBackdropLabel"
+                                 >
+                                    تغییر ایمیل
+                                 </h1>
+                                 <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                 ></button>
+                              </div>
+                              <div class="modal-body">
+                                 <!-------- form -------->
+                                 <form action="">
+                                    <div
+                                       class=""
+                                       id="emailChangeInputText"
+                                    ></div>
+
+                                    <div class="mb-3 row">
+                                       <label
+                                          for="inputPassword"
+                                          class="col-sm-2 col-form-label"
+                                          >ایمیل</label
+                                       >
+                                       <div class="col-sm-10">
+                                          <input
+                                             id="emailChangeInput"
+                                             type="email"
+                                             class="form-control"
+                                             id="inputPassword"
+                                             value="{{ request.user.email }}"
+                                          />
+                                       </div>
+                                    </div>
+
+                                    <button
+                                       type="button"
+                                       class="btn border-success text-success"
+                                       onclick="changeEmailHandler()"
+                                    >
+                                       تغییر ایمیل
+                                    </button>
+                                 </form>
+                              </div>
+                              <div class="modal-footer">
+                                 <button
+                                    type="button"
+                                    class="btn btn-outline-danger"
+                                    data-bs-dismiss="modal"
+                                 >
+                                    بستن پنجره
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+      <script src="{% static 'users/js/handleAxios.js' %}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+   </body>
+</html>

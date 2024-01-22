@@ -1,79 +1,89 @@
-{% load static %}
+{% load static %} {% load cache %}
 
 <!DOCTYPE html>
 <html dir="rtl" lang="en">
    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link
-         rel="apple-touch-icon"
-         href="{% static 'shop/img/apple-icon.png' %}"
-      />
-      <link
-         rel="shortcut icon"
+         rel="icon"
          type="image/x-icon"
-         href="{% static 'shop/img/favicon.ico' %}"
+         href="{% static 'images/logo-8.png' %}"
       />
-      <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/templatemo.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}" />
-      <link
-         rel="stylesheet"
-         href="{% static 'shop/css/fontawesome.min.css' %}"
-      />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: SamimBold;
+            src: url("{% static 'fonts/Samim-Bold-FD.ttf' %}");
+         }
 
-      <!-- Load fonts style after rendering the layout styles -->
-      <link
-         rel="stylesheet"
-         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
-      />
-      <title>Product Detail Page</title>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim.ttf' %}");
+         }
+      </style>
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
 
-      <!-- Slick -->
-      <link
-         rel="stylesheet"
-         type="text/css"
-         href="{% static 'shop/css/slick.min.css' %}"
-      />
-      <link
-         rel="stylesheet"
-         type="text/css"
-         href="{% static 'shop/css/slick-theme.css' %}"
-      />
+      <title>{{ product.title }}</title>
    </head>
 
    <body>
-      {% include 'shop/includes/navbar.html' %}
+      {% include 'navbar.html' %}
 
       <!-- Open Products detail -->
       <section class="bg-light">
          <div class="container pb-5">
             <div class="row">
-               <!--  -->
-
+               <!-- images -->
                <div class="col-lg-5 mt-5">
-                  <!-- main Image -->
                   <div class="card mb-3">
                      <img
                         class="card-img img-fluid"
                         src="{{ product.cover.url }}"
-                        alt="Card image cap"
+                        alt=""
                         id="product-detail"
+                        style="
+                           aspect-ratio: 1;
+                           object-fit: cover;
+                           object-position: center top;
+                        "
                      />
                   </div>
 
-                  <!-- list -->
-
-                  <div class="row">
+                  <div class="row w-100">
                      <!--Start Controls-->
                      <div class="col-1 align-self-center">
                         <a
                            href="#multi-item-example"
                            role="button"
-                           data-bs-slide="prev"
+                           data-bs-slide="next"
                         >
-                           <i class="text-dark fas fa-chevron-left"></i>
-                           <span class="sr-only">Previous</span>
+                           <span class="sr-only">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="40"
+                                 height="40"
+                                 fill="black"
+                                 class="bi bi-chevron-compact-right"
+                                 viewBox="0 0 16 16"
+                              >
+                                 <path
+                                    fill-rule="evenodd"
+                                    d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671"
+                                 />
+                              </svg>
+                           </span>
                         </a>
                      </div>
                      <!--End Controls-->
@@ -84,13 +94,10 @@
                         class="col-10 carousel slide carousel-multi-item"
                         data-bs-ride="carousel"
                      >
-                        <!--Start Slides-->
                         <div
                            class="carousel-inner product-links-wap"
                            role="listbox"
                         >
-                           <!--First slide-->
-
                            <div class="carousel-item active">
                               <div class="row">
                                  {% for image in product.images.all %}
@@ -100,7 +107,11 @@
                                        <img
                                           class="card-img img-fluid"
                                           src="{{ image.image.url }}"
-                                          alt="Product Image 1"
+                                          style="
+                                             aspect-ratio: 1;
+                                             object-fit: cover;
+                                             object-position: center top;
+                                          "
                                        />
                                     </a>
                                  </div>
@@ -109,15 +120,9 @@
                               </div>
                            </div>
                            <div id="last_div_wrapper" class="carousel-item">
-                              <div class="row">
-                                 {% endif %}
-                                 <!--  -->
-                                 {% endfor %}
-                                 <!--  -->
-                              </div>
+                              <div class="row">{% endif %} {% endfor %}</div>
                            </div>
                         </div>
-                        <!--End Slides-->
                      </div>
                      <!--End Carousel Wrapper-->
 
@@ -126,127 +131,171 @@
                         <a
                            href="#multi-item-example"
                            role="button"
-                           data-bs-slide="next"
+                           data-bs-slide="prev"
                         >
-                           <i class="text-dark fas fa-chevron-right"></i>
-                           <span class="sr-only">Next</span>
+                           <span class="sr-only">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="40"
+                                 height="40"
+                                 fill="black"
+                                 class="bi bi-chevron-compact-left"
+                                 viewBox="0 0 16 16"
+                              >
+                                 <path
+                                    fill-rule="evenodd"
+                                    d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223"
+                                 />
+                              </svg>
+                           </span>
                         </a>
                      </div>
                      <!--End Controls-->
                   </div>
                </div>
-               <!-- col end -->
-               <div class="col-lg-7 mt-5">
+               <!-- images end -->
+
+               <!-- start detail -->
+               <div class="col-lg-7 mt-5" style="font-family: Samim">
                   <div class="card">
                      <div class="card-body">
-                        <h1 class="h2">Active Wear</h1>
-                        <p class="h3 py-2">$25000</p>
-                        <p class="py-2">
-                           <i class="fa fa-star text-warning"></i>
-                           <i class="fa fa-star text-warning"></i>
-                           <i class="fa fa-star text-warning"></i>
-                           <i class="fa fa-star text-warning"></i>
-                           <i class="fa fa-star text-secondary"></i>
-                           <span class="list-inline-item text-dark"
-                              >Rating 4.8 | 36 Comments</span
-                           >
-                        </p>
+                        <h1 class="h4" style="color: black">
+                           {{ product.title }}
+                        </h1>
+
                         <ul class="list-inline">
                            <li class="list-inline-item">
-                              <h6>Brand:</h6>
-                           </li>
-                           <li class="list-inline-item">
-                              <p class="text-muted">
-                                 <strong>Easy Wear</strong>
-                              </p>
+                              <h6>برند : {{ product.brand.title }}</h6>
+                              <h6>دسته بندی : {{ product.category.title }}</h6>
                            </li>
                         </ul>
 
-                        <h6>Description:</h6>
-                        <p>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing
-                           elit, sed do eiusmod temp incididunt ut labore et
-                           dolore magna aliqua. Quis ipsum suspendisse. Donec
-                           condimentum elementum convallis. Nunc sed orci a diam
-                           ultrices aliquet interdum quis nulla.
-                        </p>
-                        <ul class="list-inline">
-                           <li class="list-inline-item">
-                              <h6>Avaliable Color :</h6>
-                           </li>
-                           <li class="list-inline-item">
-                              <p class="text-muted">
-                                 <strong>White / Black</strong>
-                              </p>
-                           </li>
-                        </ul>
+                        <h6>توضیحات :</h6>
+                        <p>{{ product.description }}</p>
 
-                        <h6>Specification:</h6>
+                        <h6>مشخصات :</h6>
                         <ul class="list-unstyled pb-3">
-                           <li>Lorem ipsum dolor sit</li>
-                           <li>Amet, consectetur</li>
-                           <li>Adipiscing elit,set</li>
-                           <li>Duis aute irure</li>
-                           <li>Ut enim ad minim</li>
-                           <li>Dolore magna aliqua</li>
-                           <li>Excepteur sint</li>
+                           <li>مناسب فصل پاییز</li>
+                           <li>تو کرکی، یقه، سرآستین و پایین لباس کشباف</li>
                         </ul>
 
-                        <form action="" method="GET">
+                        <div class="py-2">
+                           <span class="list-inline-item text-dark">
+                              امتیاز :
+                              <span class="reverseToFaFloatNums">4.4</span>
+                              ازبرسی
+                              <span class="reverseToFaIntNums"
+                                 >{{ product.comments.all|length }}</span
+                              >
+                              کاربر
+                           </span>
+                        </div>
+
+                        {% with product.types.all|first as first_type %}
+                        <p class="py-2">
+                           <span>قیمت</span>
+                           <span
+                              class="reverseToFaIntNums"
+                              id="persian_price_detail"
+                           >
+                              {{ first_type.price }}
+                           </span>
+                           <span>تومان</span>
+                        </p>
+
+                        <p class="py-2">
+                           <span>تعداد در انبار</span>
+                           <span class="reverseToFaIntNums" id="countInStack">
+                              {{ first_type.count_in_stock }}
+                           </span>
+                           <span>عدد</span>
+                        </p>
+                        {% endwith %}
+
+                        <ul class="list-inline">
+                           <h6>رنگ ها :</h6>
+
+                           {% for item in product.group.products.all %}
+                           <li class="list-inline-item">
+                              <a
+                                 href="{{ item.get_absolute_url }}"
+                                 class="text-muted"
+                              >
+                                 <img
+                                    src="{{ item.cover.url }}"
+                                    style="
+                                       width: 40px;
+                                       height: 40px;
+                                       object-fit: cover;
+                                       object-position: center top;
+                                    "
+                                 />
+                              </a>
+                           </li>
+                           {% endfor %}
+                        </ul>
+
+                        <!-------- form add_to_cart -------->
+                        <form>
+                           {% csrf_token %}
+                           <input
+                              id="product_id"
+                              type="hidden"
+                              name="product_id"
+                              value="{{ product.id }}"
+                           />
                            <input
                               type="hidden"
-                              name="product-title"
-                              value="Activewear"
+                              name="product_size"
+                              id="product_size"
+                              value=""
+                              required
+                              width="30"
                            />
-                           <div class="row">
+                           <input
+                              type="hidden"
+                              name="product_quantity"
+                              id="product_quantity"
+                              value="1"
+                           />
+
+                           <div class="col">
                               <div class="col-auto">
                                  <ul class="list-inline pb-3">
-                                    <li class="list-inline-item">
-                                       Size :
-                                       <input
-                                          type="hidden"
-                                          name="product-size"
-                                          id="product-size"
-                                          value="S"
-                                       />
-                                    </li>
-                                    <li class="list-inline-item">
-                                       <span class="btn btn-success btn-size"
-                                          >S</span
-                                       >
-                                    </li>
-                                    <li class="list-inline-item">
-                                       <span class="btn btn-success btn-size"
-                                          >M</span
-                                       >
-                                    </li>
-                                    <li class="list-inline-item">
-                                       <span class="btn btn-success btn-size"
-                                          >L</span
-                                       >
-                                    </li>
-                                    <li class="list-inline-item">
-                                       <span class="btn btn-success btn-size"
-                                          >XL</span
-                                       >
-                                    </li>
+                                    <h4 class="list-inline-item">اندازه :</h4>
+                                    <div>
+                                       {% for type in product.types.all %}
+                                       <li class="list-inline-item">
+                                          <span
+                                             class="btn btn-success sizeSelectorBtn"
+                                             onclick="selectSizeHandler({
+                                                title: '{{ type.title }}',
+                                                price:'{{ type.price }}',
+                                                countInStack: '{{ type.count_in_stock }}'
+                                             })"
+                                             >{{ type.title }}</span
+                                          >
+                                       </li>
+                                       {% endfor %}
+                                    </div>
                                  </ul>
                               </div>
+
                               <div class="col-auto">
                                  <ul class="list-inline pb-3">
                                     <li class="list-inline-item text-right">
-                                       Quantity
-                                       <input
-                                          type="hidden"
-                                          name="product-quanity"
-                                          id="product-quanity"
-                                          value="1"
-                                       />
+                                       تعداد
                                     </li>
                                     <li class="list-inline-item">
                                        <span
                                           class="btn btn-success"
                                           id="btn-minus"
+                                          onclick="(function btnMinus() { 
+                                             let tag = document.querySelector('#product_quantity')
+                                             if(tag.value > 1){
+                                                tag.value = parseInt(tag.value) - 1
+                                             }
+                                          })()"
                                           >-</span
                                        >
                                     </li>
@@ -261,31 +310,37 @@
                                        <span
                                           class="btn btn-success"
                                           id="btn-plus"
+                                          onclick="(function btnPlus() { 
+                                             let tag = document.querySelector('#product_quantity')
+                                             tag.value = parseInt(tag.value) + 1
+                                          })()"
                                           >+</span
                                        >
                                     </li>
                                  </ul>
                               </div>
                            </div>
+                           <!--  -->
                            <div class="row pb-3">
                               <div class="col d-grid">
                                  <button
+                                    id="btnBuySubmit"
                                     type="submit"
-                                    class="btn btn-success btn-lg"
+                                    class="btn btn-success btn-lg disabled"
                                     name="submit"
                                     value="buy"
                                  >
-                                    Buy
+                                    خرید
                                  </button>
                               </div>
+
                               <div class="col d-grid">
                                  <button
-                                    type="submit"
-                                    class="btn btn-success btn-lg"
-                                    name="submit"
-                                    value="addtocard"
+                                    id="btnAddSubmit"
+                                    type="button"
+                                    class="btn btn-success btn-lg disabled"
                                  >
-                                    Add To Cart
+                                    افزودن به سبد خرید
                                  </button>
                               </div>
                            </div>
@@ -299,94 +354,41 @@
       <!-- Close detail -->
 
       <!-- Related Products -->
-      <section class="py-5">
+      <section class="py-2">
          <div class="container">
             <div class="row text-left p-2 pb-3">
-               <h4>Related Products</h4>
+               <h4>محصولات مرتبط</h4>
             </div>
 
             <!--Start Carousel Wrapper-->
-            <div id="carousel-related-product">
+            <div style="display: flex; gap: 20px; overflow-x: auto">
                {% for item in related %}
 
-               <div class="p-2 pb-3">
-                  <div class="product-wap card rounded-0">
-                     <div class="card rounded-0">
-                        <img
-                           class="card-img rounded-0 img-fluid"
-                           src="{{ item.cover.url }}"
-                        />
-                        <div
-                           class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-                        >
-                           <ul class="list-unstyled">
-                              <li>
-                                 <a
-                                    class="btn btn-success text-white"
-                                    href="{% url 'shop:product_detail' product.id product.slug %}"
-                                    ><i class="far fa-heart"></i
-                                 ></a>
-                              </li>
-                              <li>
-                                 <a
-                                    class="btn btn-success text-white mt-2"
-                                    href="{% url 'shop:product_detail' product.id product.slug %}"
-                                    ><i class="far fa-eye"></i
-                                 ></a>
-                              </li>
-                              <li>
-                                 <a
-                                    class="btn btn-success text-white mt-2"
-                                    href="{% url 'shop:product_detail' product.id product.slug %}"
-                                    ><i class="fas fa-cart-plus"></i
-                                 ></a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="card-body">
-                        <a
-                           href="{% url 'shop:product_detail' product.id product.slug %}"
-                           class="h3 text-decoration-none"
-                           >{{ item.title|slice:'0:70' }}</a
-                        >
-                        <ul
-                           class="w-100 list-unstyled d-flex justify-content-between mb-0"
-                        >
-                           <li>M/L/X/XL</li>
-                           <li class="pt-2">
-                              <span
-                                 class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                              ></span>
-                              <span
-                                 class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                              ></span>
-                              <span
-                                 class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                              ></span>
-                              <span
-                                 class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                              ></span>
-                              <span
-                                 class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                              ></span>
-                           </li>
-                        </ul>
-                        <ul
-                           class="list-unstyled d-flex justify-content-center mb-1"
-                        >
-                           <li>
-                              <i class="text-warning fa fa-star"></i>
-                              <i class="text-warning fa fa-star"></i>
-                              <i class="text-warning fa fa-star"></i>
-                              <i class="text-warning fa fa-star"></i>
-                              <i class="text-muted fa fa-star"></i>
-                           </li>
-                        </ul>
-                        <p class="text-center mb-0" id="persian_price">
-                           {{ item.price }}
-                        </p>
-                     </div>
+               <div
+                  class="product-wap card rounded-0 mb-3"
+                  style="min-width: 200px"
+               >
+                  <img
+                     class="card-img rounded-0 img-fluid"
+                     src="{{ item.cover.url }}"
+                     style="
+                        width: 100%;
+                        aspect-ratio: 1;
+                        object-fit: cover;
+                        object-position: center top;
+                     "
+                  />
+
+                  <div class="card-body">
+                     <a
+                        href="{% url 'shop:product_detail' item.id item.slug|slice:'0:50' %}"
+                        class="h6 text-decoration-none"
+                        >{{ item.title|slice:'0:70' }}</a
+                     >
+
+                     <p class="text-center mb-0" id="persian_price">
+                        {{ item.price }}
+                     </p>
                   </div>
                </div>
 
@@ -396,18 +398,18 @@
       </section>
       <!-- End Related -->
 
-      {% include 'shop/includes/footer.html' %}
+      {% include 'footer.html' %}
 
       <!-- Start Script -->
-      <script src="{% static 'shop/js/jquery-1.11.0.min.js' %}"></script>
-      <script src="{% static 'shop/js/jquery-migrate-1.2.1.min.js' %}"></script>
-      <script src="{% static 'shop/js/bootstrap.bundle.min.js' %}"></script>
-      <script src="{% static 'shop/js/templatemo.js' %}"></script>
-      <script src="{% static 'shop/js/custom.js' %}"></script>
-      <!-- End Script -->
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 
-      <!-- Start Slider Script -->
-      <script src="{% static 'shop/js/slick.min.js' %}"></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+         integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+         crossorigin="anonymous"
+         referrerpolicy="no-referrer"
+      ></script>
+
       <script>
          $("#carousel-related-product").slick({
             infinite: true,
@@ -440,18 +442,89 @@
             ],
          });
 
-         // $("#persian_price").innerHTML = parseInt(
-         //    $("#persian_price").innerHTML
-         // ).toLocaleString("fa-IR");
+         var allIntNums = document.querySelectorAll(".reverseToFaIntNums");
+         for (index in allIntNums) {
+            allIntNums[index].innerHTML = parseInt(
+               allIntNums[index].innerHTML
+            ).toLocaleString("fa-IR");
+         }
 
-         var headTag = document.querySelector("#last_div_wrapper");
-         var lastChild = headTag.firstElementChild;
-         if (lastChild) {
-            if (lastChild.children.length === 0) {
-               headTag.parentNode.removeChild();
-            }
+         var allFloatNums = document.querySelectorAll(".reverseToFaFloatNums");
+         for (index in allFloatNums) {
+            allFloatNums[index].innerHTML = parseFloat(
+               allFloatNums[index].innerHTML
+            ).toLocaleString("fa-IR");
          }
       </script>
-      <!-- End Slider Script -->
+
+      <script>
+         function selectSizeHandler(type) {
+            let all = document.querySelectorAll(".sizeSelectorBtn");
+            for (index in all) {
+               if (all[index].innerHTML == type.title) {
+                  all[index].className = "btn btn-primary sizeSelectorBtn";
+               } else {
+                  all[index].className =
+                     "btn btn-secondary-outline sizeSelectorBtn";
+               }
+            }
+
+            document.querySelector("#product_size").value = type.title;
+            let price = document.querySelector("#persian_price_detail");
+            let countInStack = document.querySelector("#countInStack");
+            document
+               .querySelector("#btnAddSubmit")
+               .classList.remove("disabled");
+            document
+               .querySelector("#btnBuySubmit")
+               .classList.remove("disabled");
+
+            price.innerHTML = parseInt(type.price).toLocaleString("fa-IR");
+            countInStack.innerHTML = parseInt(type.countInStack).toLocaleString(
+               "fa-IR"
+            );
+         }
+      </script>
+
+      <script>
+         let all = document.querySelectorAll(".sizeSelectorBtn");
+         for (index in all) {
+            all[index].addEventListener("click", (event) => {
+               console.log("GDGDGD", all[index]);
+
+               all[index].className = "btn btn-success sizeSelectorBtn";
+
+               if (all[index].innerHTML === "") {
+                  all[index].className = "btn btn-primary sizeSelectorBtn";
+               }
+            });
+         }
+      </script>
+
+      <script>
+         const addToCartBtn = document.querySelector("#btnAddSubmit");
+         addToCartBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log(e.target.value);
+
+            let qty = document.getElementById("product_quantity");
+            let size = document.getElementById("product_size");
+
+            let fd = new FormData();
+            fd.append("product_id", "{{ product.id }}");
+            fd.append("product_size", size.value);
+            fd.append("product_quantity", qty.value);
+            fd.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+            axios
+               .post("{% url 'cart:handle_cart' product.id %}", fd)
+               .then((res) => {
+                  console.log(res.status);
+               })
+               .catch((err) => {
+                  console.log(err);
+               });
+         });
+      </script>
    </body>
 </html>

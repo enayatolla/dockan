@@ -1,137 +1,214 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="en">
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link
-         rel="apple-touch-icon"
-         href="{% static 'shop/img/apple-icon.png' %}"
-      />
-      <link
-         rel="shortcut icon"
+         rel="icon"
          type="image/x-icon"
-         href="{% static 'shop/img/favicon.ico' %}"
+         href="{% static 'images/logo-8.png' %}"
       />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Bold-FD.ttf' %}");
+         }
+      </style>
 
-      <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/templatemo.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}" />
-      <link
-         rel="stylesheet"
-         href="{% static 'shop/css/fontawesome.min.css' %}"
-      />
-
-      <!-- Load fonts style after rendering the layout styles -->
-      <link
-         rel="stylesheet"
-         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
-      />
-      <title>cart</title>
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
+      <title>سبد خرید</title>
    </head>
+
    <body>
-      {% include 'shop/includes/navbar.html' %}
+      {% include 'navbar.html' %} {% if request.user.cart.total_items > 0 %}
+      <section class="container pt-5 pb-5" style="font-family: Nahid">
+         <div class="row">
+            <div class="col-12 col-md-12 col-lg-10 mx-auto">
+               <h1 class="mb-1">سبد خرید</h1>
 
-      <section class="pt-5 pb-5">
-         <div class="container">
-            <div class="row w-100 mx-auto">
-               <div class="col-lg-10 col-md-12 col-12 mx-auto">
-                  <h3 class="display-6 mb-1 text-center">Shopping Cart</h3>
-                  <p class="mb-3 text-center">
-                     <i class="text-info">3</i> items in your cart
-                  </p>
+               <table
+                  id="shoppingCart"
+                  class="table table-condensed table-responsive"
+               >
+                  <thead>
+                     <tr>
+                        <th data-th="Product" style="width: 30%">محصول</th>
+                        <th data-th="Quantity" style="width: 10%">تعداد</th>
+                        <th data-th="Price" style="width: 12%">قیمت</th>
+                     </tr>
+                  </thead>
+                  <tbody id="cart_item_list_tag">
+                     {% for cartItem in cart %}
 
-                  <table
-                     id="shoppingCart"
-                     class="table table-condensed table-responsive"
-                  >
-                     <thead>
-                        <tr>
-                           <th style="width: 60%">Product</th>
-                           <th style="width: 10%">Quantity</th>
-                           <th style="width: 16%">edit</th>
-                           <th style="width: 12%">Price</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        {% for cartItem in cartitem_list %}
-
-                        <tr>
-                           <td data-th="Product">
-                              <div class="row">
-                                 <div class="col-md-3 text-left">
-                                    <img
-                                       src="{{ cartItem.cover }}"
-                                       alt=""
-                                       class="img-fluid d-none d-md-block rounded"
-                                    />
+                     <tr id="{{ cartItem.id }}" class="cart_item_tag">
+                        <td data-th="Product">
+                           <div class="row">
+                              <div class="col-md-3 text-left">
+                                 <img
+                                    src="{{ cartItem.product.cover.url }}"
+                                    alt=""
+                                    class="img-fluid"
+                                    width="100"
+                                    height="100"
+                                 />
+                              </div>
+                              <div class="col-md-9 text-left mt-sm-2">
+                                 <h5>
+                                    {{ cartItem.product.title|slice:'0:80' }}
+                                 </h5>
+                                 <div class="font-weight-light">
+                                    برند :
+                                    <span>{{ cartItem.product.brand }}</span>
                                  </div>
-                                 <div class="col-md-9 text-left mt-sm-2">
-                                    <h5>{{ cartItem.title }}</h5>
-                                    <p class="font-weight-light">
-                                       Brand : {{ cartItem.brand }}
-                                    </p>
-                                    <p class="font-weight-light">
-                                       category : {{ cartItem.category }}
-                                    </p>
+                                 <div class="font-weight-light">
+                                    دسته بندی :
+                                    <span>
+                                       {{ cartItem.product.category }}
+                                    </span>
+                                 </div>
+
+                                 <div class="font-weight-light">
+                                    سایز :
+                                    <span>
+                                       {{ cartItem.product_type.title}}
+                                    </span>
                                  </div>
                               </div>
-                           </td>
+                           </div>
+                        </td>
 
-                           <td data-th="Quantity">
-                              <input
-                                 type="number"
-                                 class="form-control form-control-lg text-center"
-                                 value="{{ cartItem.quantity }}"
-                              />
-                           </td>
+                        <td data-th="Quantity">
+                           <select
+                              id="qtySelectHandler"
+                              class="form-control"
+                              onchange="(() => {
+												qtyChangeHandler(id='{{cartItem.id}}', value= this.value)
+											})()"
+                           >
+                              {% for num in cartItem.range_qty %}
 
-                           <td class="actions" data-th="">
-                              <div class="text-right">
-                                 <button
-                                    class="btn btn-white border-secondary bg-white btn-md mb-2"
-                                 >
-                                    <i class="fas fa-sync"></i>
-                                 </button>
-                                 <button
-                                    class="btn btn-white border-secondary bg-white btn-md mb-2"
-                                 >
-                                    <i class="fas fa-trash"></i>
-                                 </button>
-                              </div>
-                           </td>
-                           <td data-th="Price">{{ cartItem.price }}</td>
-                        </tr>
+                              <option
+                                 value="{{ num }}"
+                                 id="option-{{cartItem.id}}-{{num}}"
+                                 class=""
+                              >
+                                 {% if num == 0 %}
+                                 <span>{{ num }} - حذف</span>
+                                 {% else %}
+                                 <span>{{ num }}</span>
+                                 {% endif %}
+                              </option>
 
-                        {% endfor %}
-                     </tbody>
-                  </table>
+                              <script>
+                                 if ("{{num}}" === "{{cartItem.quantity}}") {
+                                    document
+                                       .querySelector(
+                                          "#option-{{cartItem.id}}-{{num}}"
+                                       )
+                                       .setAttribute("selected", "true");
+                                 }
+                              </script>
 
-                  <div class="float-right text-right d-flex mx-4">
-                     <p>Subtotal :</p>
-                     <p>9900</p>
+                              {% endfor %}
+                           </select>
+
+                           <div class="text-right mt-4">
+                              <button
+                                 id="deleteItemBtn"
+                                 class="btn btn-white border-secondary bg-white btn-md mb-2"
+                                 onclick="deleteItemHandler(id = '{{ cartItem.id }}')"
+                              >
+                                 حذف
+                              </button>
+                           </div>
+                        </td>
+
+                        <td data-th="Price">
+                           <span
+                              id="cartItemPrice-{{ cartItem.id }}"
+                              class="en_to_fa_number"
+                              >{{ cartItem.get_price }}</span
+                           >
+                           تومان
+                        </td>
+                     </tr>
+
+                     {% endfor %}
+                  </tbody>
+               </table>
+
+               <div class="mt-3">
+                  <div class="d-flex">
+                     <span class="ms-3">جمع کل سبد خرید :</span>
+                     <span id="cartTotalPrice" class="en_to_fa_number ms-3">
+                        {{ request.user.cart.total_price }}
+                     </span>
+                     <span class="ms-3">تومان</span>
                   </div>
-               </div>
-            </div>
-
-            <div class="row mt-2 d-flex align-items-center">
-               <div class="col-sm-6 order-md-2 text-right">
-                  <a
-                     href="{% url 'cart:checkout_shipping' %}"
-                     class="btn btn-primary mb-4 btn-lg pl-5 pr-5"
+                  <div
+                     class="d-flex justify-content-between align-items-center mt-4 px-3"
                   >
-                     Checkout
-                  </a>
-               </div>
+                     <div class="text-start p-0">
+                        <a href="{% url 'shop:product_list' %}">ادامه خرید</a>
+                     </div>
 
-               <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                  <a href="{% url 'shop:product_list' %}">
-                     <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a
-                  >
+                     <div class="text-end p-0">
+                        <a
+                           href="{% url 'cart:checkout_shipping' %}"
+                           class="btn btn-primary p-2"
+                        >
+                           ثبت سفارش
+                        </a>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
       </section>
+      {% else %}
+      <section class="container">
+         <div class="row">
+            <div class="col-12 col-md-8 py-5 mx-auto text-center">
+               <h6 class="display-6" style="font-family: Shabnam">
+                  سبد خرید شما خالی است
+               </h6>
+               <img
+                  src="{% static 'images/empty_cart.jpg' %}"
+                  width="300px"
+                  height="300px"
+                  style="object-fit: cover; object-position: top center"
+               />
+               <a
+                  href="{% url 'shop:home_page' %}"
+                  style="font-family: Nahid; display: block"
+                  >ادامه خرید</a
+               >
+            </div>
+         </div>
+      </section>
+      {% endif %}
+
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+      <script src="{% static 'cart/js/axios-handler.js' %}"></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+         integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+         crossorigin="anonymous"
+         referrerpolicy="no-referrer"
+      ></script>
    </body>
 </html>

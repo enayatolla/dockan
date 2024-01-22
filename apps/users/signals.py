@@ -8,3 +8,9 @@ def create_profile_and_shopping_cart(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
         Cart.objects.create(user=instance)
+
+
+
+
+
+

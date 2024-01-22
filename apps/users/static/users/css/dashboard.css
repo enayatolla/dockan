@@ -1,0 +1,11 @@
+.list-item {
+   user-select: none;
+}
+
+.hover-dark:hover {
+   background-color: #aaaaff;
+}
+
+.hover-light:hover {
+   background-color: #b7dde1;
+}

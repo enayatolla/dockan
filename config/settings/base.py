@@ -3,7 +3,6 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-)np=hkxkob)t(7u#s7&#pvrn&(%46+uej-6#-ob417pp__kwq8'
-DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 THIRD_PARTY_APPS = [
@@ -13,12 +12,12 @@ THIRD_PARTY_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django_render_partial',
     'django_social_share',
+    'django_celery_beat',
 ]
 LOCAL_APPS = [
     'apps.apis',
     'apps.shop',
     'apps.cart',
-    # 'apps.tickets',
     'apps.users',
 ]
 INSTALLED_APPS = [
@@ -32,6 +31,9 @@ INSTALLED_APPS = [
     *LOCAL_APPS,
 ]
 
+APPLY_MIDDLEWARE=[
+    'apps.shop.middleware.ShopMiddleware',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -40,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    *APPLY_MIDDLEWARE
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -47,7 +50,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,7 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'UTC'
 
@@ -114,9 +117,9 @@ STATIC_ROOT= BASE_DIR / 'static'
 MEDIA_URL = ''
 MEDIA_ROOT= BASE_DIR / 'media'
 
-# STATICFILES_DIRS=[
-#    BASE_DIR / 'staticfiles',
-# ]
+STATICFILES_DIRS=[
+   BASE_DIR / 'staticfiles',
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -130,4 +133,18 @@ AUTHENTICATION_BACKENDS = [
 # from config.settings.simple_jwt import *
 # from config.settings.cors import *
 # from config.settings.rest_framework import *
+from config.utils.redis import *
+
+
+
+CELERY_BROKER_URL ='redis://redis_db:6379/0' if str(BASE_DIR) == "/app" else 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+
+
+
 

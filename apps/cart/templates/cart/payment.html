@@ -1,69 +1,214 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="en">
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link
-         rel="apple-touch-icon"
-         href="{% static 'shop/img/apple-icon.png' %}"
-      />
-      <link
-         rel="shortcut icon"
+         rel="icon"
          type="image/x-icon"
-         href="{% static 'shop/img/favicon.ico' %}"
+         href="{% static 'images/logo-8.png' %}"
       />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Medium.ttf' %}");
+         }
+      </style>
 
-      <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/templatemo.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}" />
-      <link
-         rel="stylesheet"
-         href="{% static 'shop/css/fontawesome.min.css' %}"
-      />
-
-      <!-- Load fonts style after rendering the layout styles -->
-      <link
-         rel="stylesheet"
-         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
-      />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
       <title>cart</title>
    </head>
    <body>
-      {% include 'shop/includes/navbar.html' %}
+      {% include 'navbar.html' %}
 
-      <section class="pt-5 pb-5">
-         <div class="container">
-            <div class="row w-100 mx-auto">
-               <div class="col-lg-10 col-md-12 col-12 mx-auto">
-                  <h3 class="display-6 mb-1 text-center">
-                     Choose your pay method
-                  </h3>
-                  <p class="mb-3 text-center">
-                     <i class="text-info">enter your cart id</i>
-                  </p>
+      <section class="container" style="font-family: Nahid">
+         <div class="row">
+            <div class="col-12 col-md-10 col-lg-10">
+               <h3 class="my-4 text-center">روش پرداخت را انتخاب کنید</h3>
+            </div>
+
+            <!-- pay method -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-7 mb-3">
+               <div class="bg-light rounded p-3">
+                  <h۴>روش پرداخت را انتخاب کنید</h۴>
+
+                  <div class="p-1">
+                     <div
+                        id=""
+                        onclick=""
+                        class="shippingSelector border border-2 rounded my-3 p-3 text-success border-success"
+                        style="user-select: none; cursor: auto"
+                     >
+                        پرداخت درب منزل
+                     </div>
+                     <div
+                        id=""
+                        onclick=""
+                        class="shippingSelector border border-2 rounded my-3 p-3 text-secondary"
+                        style="user-select: none; cursor: not-allowed"
+                     >
+                        درگاه اینترنتی
+                     </div>
+                  </div>
                </div>
             </div>
 
-            <div
-               class="row d-flex justify-content-between align-items-center mt-5"
-            >
-               <div class="col-sm-2 order-md-2 text-right">
-                  <a href="{% url 'cart:checkout_shipping' %}">
-                     <span>back</span>
-                     <i class="fas fa-arrow-right mx-2"></i>
-                  </a>
-               </div>
+            <!-- prices -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+               <div class="bg-light rounded p-2">
+                  <div
+                     class="d-flex justify-content-between border-bottom py-3 px-2"
+                  >
+                     <span class="ms-3">جمع کل سبد خرید</span>
+                     <span id="cartTotalPrice">
+                        {% if cart.discount %}
+                        <span
+                           class="en_to_fa_number ms-3"
+                           style="color: grey; text-decoration: line-through"
+                           >{{ cart.discounted_total_price }}</span
+                        >
+                        {% else %}
+                        <span class="en_to_fa_number ms-3">
+                           {{ cart.total_price }}
+                        </span>
+                        {% endif %}
+                        <span class="ms-3">تومان</span>
+                     </span>
+                  </div>
 
-               <div class="col-sm-6 order-md-1 text-left">
-                  <a href="{% url 'cart:thankyou' %}">
-                     <i class="fas fa-arrow-left mx-2"></i>
-                     <span>Confirm order creation</span>
-                  </a>
+                  <div
+                     class="d-flex justify-content-between border-bottom py-3 px-2"
+                  >
+                     <span class="ms-3">تعداد محصولات</span>
+                     <span id="cartTotalPrice">
+                        <span class="en_to_fa_number ms-3"
+                           >{{ cart.total_items }}</span
+                        >
+
+                        <span class="ms-3">عدد</span>
+                     </span>
+                  </div>
+
+                  <div
+                     class="d-flex justify-content-between border-bottom py-3 px-2"
+                  >
+                     <span class="ms-3">هزینه ارسال کالا</span>
+                     <span id="cartTotalPrice">
+                        <span class="en_to_fa_number ms-3"
+                           >{{ cart.shipping_price }}</span
+                        >
+
+                        <span class="ms-3">تومان</span>
+                     </span>
+                  </div>
+
+                  <div
+                     class="d-flex justify-content-between border-bottom py-3 px-2"
+                  >
+                     <span class="ms-3">مقدار تخفیف</span>
+                     <span id="cartTotalPrice">
+                        <span class="en_to_fa_number ms-3"
+                           >{{ cart.discount_amount }}</span
+                        >
+
+                        <span class="ms-3">تومان</span>
+                     </span>
+                  </div>
+
+                  <div
+                     class="d-flex justify-content-between border-bottom py-3 px-2"
+                  >
+                     <span class="ms-3">هزینه پرداختی</span>
+                     <span id="cartTotalPrice">
+                        <span class="en_to_fa_number ms-3">
+                           {{ cart.payment_amount}}
+                        </span>
+                        {{ cart.shipping_price.normal }}
+
+                        <span class="ms-3">تومان</span>
+                     </span>
+                  </div>
+
+                  <!-- discount Input -->
+                  <div class="d-flex justify-content-between py-3 px-2">
+                     <form action="">
+                        <label for="discountCodeInput">کد تخفیف</label>
+                        <input
+                           dir="ltr"
+                           required
+                           aria-required="true"
+                           id="discountCodeInput"
+                           type="text"
+                           style="
+                              box-sizing: border-box;
+                              padding: 6px 1px;
+                              padding-left: 10px;
+                              border: 2px solid grey;
+                              border-radius: 5px;
+                              max-width: 140px;
+                           "
+                        />
+                        <button
+                           class="btn border-2 border-info text-info"
+                           type="button"
+                           onclick="applyDiscountCode({
+                        id : '{{ cart.discount.id }}' ,
+                        code : '{{ cart.discount.code }}'
+                     })"
+                        >
+                           اعمال کد
+                        </button>
+                     </form>
+                  </div>
                </div>
             </div>
          </div>
+
+         <div
+            class="d-flex justify-content-between align-items-center my-3 mb-5"
+         >
+            <div class="">
+               <a
+                  href="{% url 'cart:checkout_shipping' %}"
+                  style="font-family: Samim"
+               >
+                  بازگشت به انتخاب آدرس
+               </a>
+            </div>
+
+            <div class="">
+               <button
+                  class="text-primary text border-0"
+                  style="font-family: Samim; background-color: transparent"
+                  onclick="createOrder()"
+               >
+                  ثبت سفارش
+               </button>
+            </div>
+         </div>
       </section>
+
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+      <script src="{% static 'cart/js/axios-handler.js' %}"></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"
+         integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA=="
+         crossorigin="anonymous"
+         referrerpolicy="no-referrer"
+      ></script>
    </body>
 </html>

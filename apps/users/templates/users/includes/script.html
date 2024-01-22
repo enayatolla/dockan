@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- users script -->
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<!-- <script src="{% static 'users/vendor/libs/jquery/jquery.js' %}"></script> -->
+<!-- <script src="{% static 'users/vendor/libs/popper/popper.js' %}"></script> -->
+<!-- <script src="{% static 'users/vendor/js/bootstrap.js' %}"></script> -->
+<!-- <script src="{% static 'users/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script> -->
+<!-- <script src="{% static 'users/vendor/js/menu.js' %}"></script> -->
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="{% static 'users/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<!-- Main JS -->
+<script src="{% static 'users/js/main.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'users/js/dashboards-analytics.js' %}"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<style>
+   @font-face {
+      font-family: regular_400;
+      src: url("{% static 'shop/webfonts/iranyekanwebregular.ttf' %}");
+   }
+
+   * {
+      font-family: regular_400;
+   }
+</style>
+
+<script>
+   let num = document.querySelectorAll(".en_to_fa_number");
+   for (index in num) {
+      num[index].innerHTML = parseInt(num[index].innerHTML).toLocaleString(
+         "fa-IR"
+      );
+   }
+</script>

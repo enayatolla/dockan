@@ -1,61 +1,70 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="en">
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link
-         rel="apple-touch-icon"
-         href="{% static 'shop/img/apple-icon.png' %}"
-      />
-      <link
-         rel="shortcut icon"
+         rel="icon"
          type="image/x-icon"
-         href="{% static 'shop/img/favicon.ico' %}"
+         href="{% static 'images/logo-8.png' %}"
       />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Medium.ttf' %}");
+         }
+      </style>
 
-      <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/templatemo.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}" />
-      <link
-         rel="stylesheet"
-         href="{% static 'shop/css/fontawesome.min.css' %}"
-      />
-
-      <!-- Load fonts style after rendering the layout styles -->
-      <link
-         rel="stylesheet"
-         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
-      />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
       <title>cart</title>
    </head>
    <body>
-      {% include 'shop/includes/navbar.html' %}
+      {% include 'navbar.html' %}
 
-      <section class="pt-5 pb-5">
-         <div class="container">
-            <div class="row w-100 mx-auto">
-               <div class="col-lg-10 col-md-12 col-12 mx-auto">
-                  <h3 class="display-6 mb-1 text-center">
-                     Tank You For Shopping
-                  </h3>
-                  <p class="mb-3 text-center">
-                     <i class="text-info"> your order confirm successfully </i>
-                  </p>
-               </div>
+      <section class="container">
+         <div class="row">
+            <div class="col-lg-10 col-md-12 col-12 mx-auto pt-5">
+               <h3
+                  class="display-6 mb-4 text-center"
+                  style="font-family: Shabnam"
+               >
+                  سفارش شما با موفقیت ثبت شد
+               </h3>
+               <p
+                  class="mb-3 text-center text-success fs-4"
+                  style="font-family: Nahid"
+               >
+                  از خرید شما سپاس گذاریم
+               </p>
             </div>
+         </div>
 
-            <div
-               class="row d-flex align-items-center justify-content-center mt-5"
-            >
-               <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-center">
-                  <a href="{% url 'shop:home_page' %}">
-                     <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a
-                  >
-               </div>
+         <div
+            class="row d-flex align-items-center justify-content-center mt-5"
+            style="font-family: Samim"
+         >
+            <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-center">
+               <a href="{% url 'shop:home_page' %}" class="text-primary text">
+                  بازگشت به صفحه اصلی
+               </a>
             </div>
          </div>
       </section>
+
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
    </body>
 </html>

@@ -1,3 +1,15 @@
 from django.test import TestCase
+# from unittest import TestCase
 
-# Create your tests here.
+
+
+def test_good_printer():
+   assert True
+   
+   
+   
+   
+   
+   
+   
+   

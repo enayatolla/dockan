@@ -7,8 +7,9 @@ from django.contrib import auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
-import uuid, random, string
+from django.utils.html import format_html
 from datetime import timedelta
+import random, string
 
 
 class UserManager(BaseUserManager):
@@ -95,6 +96,9 @@ class User(AbstractBaseUser, PermissionsMixin):
       verbose_name_plural = _("users")
       abstract = False
       swappable = "AUTH_USER_MODEL"
+      
+   def __str__(self):
+      return str(self.username)
 
    def clean(self):
       super().clean()
@@ -106,36 +110,72 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class UserProfile(models.Model):
-   user = models.OneToOneField(User, on_delete=models.CASCADE)
-   avatar = models.ImageField(
-      upload_to='images/profile_avatar',
-      default="avatar/DefaultAvatar.jpg",
-      null=True,
-      blank=True,
-   )
+   user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", editable=False)
+   avatar = models.ImageField(upload_to='images/profile_avatar', null=True, blank=True)
    description= models.TextField( max_length=512, null=True, blank=True )
    birth_date = models.DateTimeField( default=None, null=True, blank=True )
 
+   def get_avatar(self):
+      if self.avatar:
+         return format_html(
+            f"<img src= '{self.avatar.url}' style='object-fit:cover;width:40px; height:30px' />"
+         )
+      else:
+         return format_html("<h2 >no avatar</h2>")
+
 
 class Otp(models.Model):
-   request_id= models.BigAutoField(primary_key=True, editable= False)
-   phone= models.CharField( max_length= 12, null=False, blank=False )
+   id= models.BigAutoField(primary_key=True, editable= False)
+   phone= models.CharField(max_length= 13)
    password=  models.CharField(max_length= 6, null=True)
    valid_until= models.DateTimeField(default= timezone.now)
+   created_at= models.DateTimeField(default= timezone.now)
 
    def generate_password(self):
-      self.password= self._random_password()
       self.valid_until= timezone.now() + timedelta(minutes=2)
+      code = self._random_password()
+      self.password= code
+      self.send_otp(code)
 
    def _random_password(self):
       rand = random.SystemRandom()
       digits = rand.choices(string.digits, k= 4)
-      print(''.join(digits))
       return ''.join(digits)
+   
+   def send_otp(self, code) -> None:
+      print( code )
    
    class Meta:
       verbose_name= _('One Time Password')
       verbose_name_plural= _('One Time Passwords')
 
 
+class ShippingAddress (models.Model):
+   id = models.BigAutoField(primary_key=True, editable=False)
+   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
+   created_at= models.DateTimeField(auto_now_add= True, null=True, blank=True)
 
+   province= models.CharField(max_length=64, null=True, blank=True)
+   city= models.CharField(max_length=64, null=True, blank=True)
+   address = models.CharField(max_length=512, null=True, blank=True)
+   region= models.CharField(max_length=32, null=True, blank=True)
+   last= models.CharField(max_length=64, null=True, blank=True)
+   plaque= models.CharField(max_length=16, null=True, blank=True)
+   postal_code= models.CharField(max_length=32, null=True, blank=True)
+   stairs=models.CharField(max_length=32, null=True, blank=True)
+   phone=models.CharField(max_length=16, null=True, blank=True)
+   
+   def __str__(self):
+      return str(self.province + ', ' + self.city + ', ' + self.address)
+
+
+# latitude=models.CharField(max_length=32, null=True, blank=True)
+# longitude=models.CharField(max_length=32, null=True, blank=True)
+# primary= models.CharField(max_length=64, null=True, blank=True)
+# neighbourhood= models.CharField(max_length=32, null=True, blank=True)
+# village= models.CharField(max_length=64, null=True, blank=True)
+# rural_district= models.CharField(max_length=64, null=True, blank=True)
+# district= models.CharField(max_length=128, null=True, blank=True)
+# address_compact= models.CharField(max_length=128, null=True, blank=True)
+# country = models.CharField(max_length=32, null=True, blank=True)
+# postal_address= models.CharField(max_length=64, null=True, blank=True)

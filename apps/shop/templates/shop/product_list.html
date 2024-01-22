@@ -1,229 +1,165 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="en">
    <head>
-      <title>Product Listing</title>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link
-         rel="apple-touch-icon"
-         href="{% static 'shop/img/apple-icon.png' %}"
-      />
-      <link
-         rel="shortcut icon"
+         rel="icon"
          type="image/x-icon"
-         href="{% static 'shop/img/favicon.ico' %}"
+         href="{% static 'images/logo-8.png' %}"
       />
+      <style>
+         @font-face {
+            font-family: Shabnam;
+            src: url("{% static 'fonts/Shabnam-Medium-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: vazir_code;
+            src: url("{% static 'fonts/Vazir-Code-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Nahid;
+            src: url("{% static 'fonts/Nahid-FD.ttf' %}");
+         }
+         @font-face {
+            font-family: Samim;
+            src: url("{% static 'fonts/Samim-Bold-FD.ttf' %}");
+         }
+      </style>
 
-      <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/templatemo.css' %}" />
-      <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}" />
-      <link
-         rel="stylesheet"
-         href="{% static 'shop/css/fontawesome.min.css' %}"
-      />
-
-      <!-- Load fonts style after rendering the layout styles -->
-      <link
-         rel="stylesheet"
-         href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
-      />
+      <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.css' %}" />
+      <title>لیست محصولات</title>
    </head>
 
    <body>
-      {% include 'shop/includes/navbar.html' %}
+      {% include 'navbar.html' %}
 
       <!-- Start Content -->
       <div class="container py-5">
          <div class="row">
             <!-- Categories -->
             <div class="col-lg-3">
-               <h1 class="h2 pb-4">Categories</h1>
-               <ul class="list-unstyled templatemo-accordion">
-                  <li class="pb-3">
-                     <a
-                        class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                        href="#"
-                     >
-                        Gender
-                        <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
-                     </a>
-                     <ul class="collapse show list-unstyled pl-3">
-                        <li>
-                           <a class="text-decoration-none" href="#">Men</a>
-                        </li>
-                        <li>
-                           <a class="text-decoration-none" href="#">Women</a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="pb-3">
-                     <a
-                        class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                        href="#"
-                     >
-                        Sale
-                        <i
-                           class="pull-right fa fa-fw fa-chevron-circle-down mt-1"
-                        ></i>
-                     </a>
-                     <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                        <li>
-                           <a class="text-decoration-none" href="#">Sport</a>
-                        </li>
-                        <li>
-                           <a class="text-decoration-none" href="#">Luxury</a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="pb-3">
-                     <a
-                        class="collapsed d-flex justify-content-between h3 text-decoration-none"
-                        href="#"
-                     >
-                        Product
-                        <i
-                           class="pull-right fa fa-fw fa-chevron-circle-down mt-1"
-                        ></i>
-                     </a>
-                     <ul id="collapseThree" class="collapse list-unstyled pl-3">
-                        <li>
-                           <a class="text-decoration-none" href="#">Bag</a>
-                        </li>
-                        <li>
-                           <a class="text-decoration-none" href="#">Sweather</a>
-                        </li>
-                        <li>
-                           <a class="text-decoration-none" href="#">Sunglass</a>
-                        </li>
-                     </ul>
-                  </li>
+               <h1 class="h2 pb-4">دسته بندی ها</h1>
+
+               <ul class="list-unstyled templatemo-accordion form-group">
+                  <form action="{% url 'shop:product_list' %}">
+                     <h4>فیلتر قیمت</h4>
+                     <div class="form-group">
+                        <label for="min_price">پایین ترین قیمت</label>
+                        <input
+                           class="form-control"
+                           type="text"
+                           value=""
+                           id="min_price"
+                           name="min_price"
+                           required
+                        />
+                     </div>
+
+                     <div class="form-group">
+                        <label class="col-4" for="max_price"
+                           >بالاترین قیمت</label
+                        >
+                        <input
+                           class="form-control col-2 cole-sm-2"
+                           type="text"
+                           value=""
+                           id="max_price"
+                           name="max_price"
+                           required
+                        />
+                     </div>
+
+                     <hr />
+
+                     <div>
+                        <h4>فیلتر رنگ</h4>
+                        {% for color in colors %}
+                        <div class="form-group">
+                           <label for="colors">{{ color }}</label>
+                           <input
+                              name="colors"
+                              value="{{ color }}"
+                              type="checkbox"
+                           />
+                        </div>
+                        {% endfor %}
+                     </div>
+
+                     <hr />
+
+                     <div>
+                        <h4>فیلتر سایز</h4>
+                        {% for size in sizes %}
+                        <div class="form-group">
+                           <label for="colors">{{ size }}</label>
+                           <input
+                              name="sizes"
+                              value="{{ size }}"
+                              type="checkbox"
+                           />
+                        </div>
+                        {% endfor %}
+                     </div>
+
+                     <hr />
+
+                     <div class="col-md-12 pb-4">
+                        <div class="d-flex">
+                           <select class="form-control">
+                              <option>Featured</option>
+                              <option>A to Z</option>
+                              <option>Item</option>
+                           </select>
+                        </div>
+                     </div>
+
+                     <button class="btn" type="submit">اعمال</button>
+                  </form>
                </ul>
             </div>
 
             <div class="col-lg-9">
-               <!-- filter -->
-
-               <div class="row">
-                  <div class="col-md-6">
-                     <ul class="list-inline shop-top-menu pb-3 pt-1">
-                        <li class="list-inline-item">
-                           <a
-                              class="h3 text-dark text-decoration-none mr-3"
-                              href="#"
-                              >All</a
-                           >
-                        </li>
-                        <li class="list-inline-item">
-                           <a
-                              class="h3 text-dark text-decoration-none mr-3"
-                              href="#"
-                              >Men's</a
-                           >
-                        </li>
-                        <li class="list-inline-item">
-                           <a class="h3 text-dark text-decoration-none" href="#"
-                              >Women's</a
-                           >
-                        </li>
-                     </ul>
-                  </div>
-
-                  <div class="col-md-6 pb-4">
-                     <div class="d-flex">
-                        <select class="form-control">
-                           <option>Featured</option>
-                           <option>A to Z</option>
-                           <option>Item</option>
-                        </select>
-                     </div>
-                  </div>
-               </div>
-
-               <!-- content -->
-
+               <!-- products -->
                <div class="row">
                   <!-- product Item -->
                   {% for product in object_list %}
 
-                  <div class="col-md-4">
-                     <div class="card mb-4 product-wap rounded-0">
-                        <div class="card rounded-0">
-                           <img
-                              class="card-img rounded-0 img-fluid"
-                              src="{{ product.cover.url }}"
-                           />
-                           <div
-                              class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
-                           >
-                              <ul class="list-unstyled">
-                                 <li>
-                                    <a
-                                       class="btn btn-success text-white"
-                                       href="{% url 'shop:product_detail' product.id product.slug  %}"
-                                       ><i class="far fa-heart"></i
-                                    ></a>
-                                 </li>
-                                 <li>
-                                    <a
-                                       class="btn btn-success text-white mt-2"
-                                       href="{% url 'shop:product_detail' product.id product.slug %}"
-                                       ><i class="far fa-eye"></i
-                                    ></a>
-                                 </li>
-                                 <li>
-                                    <a
-                                       class="btn btn-success text-white mt-2"
-                                       href="{% url 'shop:product_detail' product.id product.slug  %}"
-                                       ><i class="fas fa-cart-plus"></i
-                                    ></a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="card-body">
-                           <a
-                              href="{% url 'shop:product_detail' product.id product.slug  %}"
-                              class="h3 text-decoration-none"
-                              >Oupidatat non</a
-                           >
-                           <ul
-                              class="w-100 list-unstyled d-flex justify-content-between mb-0"
-                           >
-                              <li>M/L/X/XL</li>
-                              <li class="pt-2">
-                                 <span
-                                    class="product-color-dot color-dot-red float-left rounded-circle ml-1"
-                                 ></span>
-                                 <span
-                                    class="product-color-dot color-dot-blue float-left rounded-circle ml-1"
-                                 ></span>
-                                 <span
-                                    class="product-color-dot color-dot-black float-left rounded-circle ml-1"
-                                 ></span>
-                                 <span
-                                    class="product-color-dot color-dot-light float-left rounded-circle ml-1"
-                                 ></span>
-                                 <span
-                                    class="product-color-dot color-dot-green float-left rounded-circle ml-1"
-                                 ></span>
-                              </li>
-                           </ul>
-                           <ul
-                              class="list-unstyled d-flex justify-content-center mb-1"
-                           >
-                              <li>
-                                 <i class="text-warning fa fa-star"></i>
-                                 <i class="text-warning fa fa-star"></i>
-                                 <i class="text-warning fa fa-star"></i>
-                                 <i class="text-muted fa fa-star"></i>
-                                 <i class="text-muted fa fa-star"></i>
-                              </li>
-                           </ul>
-                           <p class="text-center mb-0">$250.00</p>
-                        </div>
+                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-3">
+                     <a
+                        href="{% url 'shop:product_detail' product.id product.slug|slice:'0:50'  %}"
+                        class="text-decoration-none"
+                        style="width: 100%"
+                     >
+                        <img
+                           class="card-img rounded-0 img-fluid"
+                           src="{{ product.cover.url }}"
+                           style="
+                              width: 100%;
+                              aspect-ratio: 1;
+                              object-fit: cover;
+                              object-position: center top;
+                           "
+                        />
+                     </a>
+
+                     <div class="card-body px-0">
+                        <a
+                           href="{% url 'shop:product_detail' product.id product.slug|slice:'0:80'  %}"
+                           class="text-decoration-none p-0 text-justify w-100"
+                        >
+                           {{ product.title|slice:'0:80' }}
+                        </a>
+                        <ul
+                           class="w-100 list-unstyled d-flex justify-content-between mb-0"
+                        >
+                           <li>M/L/X/XL</li>
+                        </ul>
+                        <p class="text-center mb-0">
+                           <span class="p-0">{{ product.price }}</span>
+                        </p>
                      </div>
                   </div>
 
@@ -232,7 +168,6 @@
                </div>
 
                <!-- pagination -->
-
                <div div="row">
                   <ul class="pagination pagination-lg justify-content-end">
                      <li class="page-item disabled">
@@ -243,6 +178,7 @@
                            >1</a
                         >
                      </li>
+
                      <li class="page-item">
                         <a
                            class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
@@ -250,6 +186,7 @@
                            >2</a
                         >
                      </li>
+
                      <li class="page-item">
                         <a
                            class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark"
@@ -267,24 +204,26 @@
       <!-- End Content -->
 
       <!-- Start Brands -->
-      <section class="bg-light py-5">
-         <div class="container my-4">
-            <div class="row text-center py-3">
-               <div class="col-lg-6 m-auto">
-                  <h1 class="h1">Our Brands</h1>
-                  <p>Lorem</p>
-               </div>
+      <section
+         class="bg-light py-1"
+         style="max-width: 100vw; overflow-x: hidden"
+      >
+         <div class="container my-1">
+            <div class="row text-center py-1">
+               <h1 class="h1">برند های محصولات</h1>
+
                <div class="col-lg-9 m-auto tempaltemo-carousel">
-                  <div class="row d-flex flex-row">
+                  <div dir="rtl" class="row d-flex flex-row">
                      <!--Controls-->
                      <div class="col-1 align-self-center">
                         <a
                            class="h1"
                            href="#multi-item-example"
                            role="button"
-                           data-bs-slide="prev"
+                           data-bs-slide="next"
                         >
                            <i class="text-light fas fa-chevron-left"></i>
+                           next
                         </a>
                      </div>
                      <!--End Controls-->
@@ -350,8 +289,9 @@
                            class="h1"
                            href="#multi-item-example"
                            role="button"
-                           data-bs-slide="next"
+                           data-bs-slide="prev"
                         >
+                           prev
                            <i class="text-light fas fa-chevron-right"></i>
                         </a>
                      </div>
@@ -364,15 +304,9 @@
       <!--End Brands-->
 
       <!-- Start Footer -->
-      {% include 'shop/includes/footer.html' %}
+      {% include 'footer.html' %}
       <!-- End Footer -->
 
-      <!-- Start Script -->
-      <script src="{% static 'shop/js/jquery-1.11.0.min.js' %}"></script>
-      <script src="{% static 'shop/js/jquery-migrate-1.2.1.min.js' %}"></script>
-      <script src="{% static 'shop/js/bootstrap.bundle.min.js' %}"></script>
-      <script src="{% static 'shop/js/templatemo.js' %}"></script>
-      <script src="{% static 'shop/js/custom.js' %}"></script>
-      <!-- End Script -->
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
    </body>
 </html>

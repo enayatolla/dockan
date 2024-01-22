@@ -5,12 +5,13 @@ from django.core.exceptions import ValidationError
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
-class UserEditForm(forms.ModelForm):
+
+class UserProfileForm(forms.ModelForm):
    class Meta:
       model= User
-      fields= "__all__"
-      
-      
+      exclude = ("password",)
+
+
 # this uses in login
 def startWithZero(string):
    if string[0] != "0" :
@@ -20,14 +21,20 @@ def startWithZero(string):
          params={"value":string}
       )
 
+
 class UserCreationForm(forms.ModelForm):
    """A form for creating new users. Includes all the required."""
-   password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-   password2 = forms.CharField(label="Password confirm", widget=forms.PasswordInput)
+   password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={"class": "form-control"}))
+   password2 = forms.CharField(label="Password confirm", widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
    class Meta:
       model = User
       fields = ["username", "phone_number", "email"]
+      widgets = {
+         "username":forms.TextInput(attrs={"class": "form-control", "autofocus":"true", "dir":"ltr"}),
+         "phone_number": forms.TextInput(attrs={"class": "form-control", "dir":"ltr"}),
+         "email": forms.EmailInput(attrs={"class": "form-control", "dir":"ltr"})
+      }
    
    # form.is_valid() runs clean_[fieldname] function
    # function clean_[fieldname] is for field validation 
