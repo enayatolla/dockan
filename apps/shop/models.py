@@ -170,4 +170,20 @@ class Review (models .Model):
 
 class Banner(models.Model):
    id= models.BigAutoField(primary_key=True, editable=False)
-   title= models.CharField(max_length=256, null=True, blank=True)
+   title= models.CharField(max_length=128, null=True, blank=True)
+   description= models.TextField(max_length=256, null=True, blank=True)
+   cover= models.ImageField(upload_to='images/banner_cover', null=True, blank=True)
+   url= models.CharField(max_length=256, null=True, blank=True)
+   created_at= models.DateTimeField(auto_now_add= True, null=True)
+   def get_cover(self):
+      if self.cover:
+         return format_html(
+            f"""<img 
+               src='{self.cover.url}' 
+               width='180px' 
+               height='100px' 
+               style='object-fit:cover; object-position: top center'>
+            """
+         )
+      else:
+         return format_html("<h4>no cover</h4>")

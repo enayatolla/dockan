@@ -47,28 +47,17 @@
          style="max-height: 60vh"
       >
          <div class="carousel-indicators">
+            {% for banner in banner_list %}
             <button
-               class="active circle-point"
+               class="{% if forloop.counter0 == 0 %}active{% endif %} circle-point"
                type="button"
                data-bs-target="#carouseAutoplayingBanner"
-               data-bs-slide-to="0"
+               data-bs-slide-to="{{ forloop.counter0 }}"
                aria-current="true"
-               aria-label="Slide 1"
+               aria-label=""
             ></button>
-            <button
-               class="circle-point"
-               type="button"
-               data-bs-target="#carouseAutoplayingBanner"
-               data-bs-slide-to="1"
-               aria-label="Slide 2"
-            ></button>
-            <button
-               class="circle-point"
-               type="button"
-               data-bs-target="#carouseAutoplayingBanner"
-               data-bs-slide-to="2"
-               aria-label="Slide 3"
-            ></button>
+            {% endfor %}
+
             <style>
                .circle-point {
                   width: 10px !important;

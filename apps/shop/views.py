@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.db.models import Q, QuerySet, Sum, Avg , F
-from .models import Product , Brand, Review, Category
+from .models import Product , Brand, Banner, Category
 from .tasks import *
 from django.views.decorators.cache import cache_page
 
@@ -9,27 +9,27 @@ class HomePageView(View):
    def get(self, request, **kwags):
       categories = Category.objects.all()[0:4]
       featured = Product.objects.all()[0:6]
-      
-      banner_list = [
-         {
-            "id": "1",
-            "title": "Tiny and Perfect eCommerce Template",
-            "description": "Zay Shop is an eCommerce HTML5 CSS template withlatest version of Bootstrap 5 (beta 1). This template is 100 free provided by",
-            "cover": "/static/images/18.jpg",
-         },
-         {
-            "id": "2",
-            "title": "Tiny and Perfect eCommerce Template",
-            "description": "Zay Shop is an eCommerce HTML5 CSS template withlatest version of Bootstrap 5 (beta 1). This template is 100 free provided by",
-            "cover": "/static/images/18.jpg",
-         },
-         {
-            "id": "2",
-            "title": "Tiny and Perfect eCommerce Template",
-            "description": "Zay Shop is an eCommerce HTML5 CSS template withlatest version of Bootstrap 5 (beta 1). This template is 100 free provided by",
-            "cover": "/static/images/18.jpg",
-         },
-      ]
+      banner_list = Banner.objects.all().order_by('-created_at')
+      # banner_list = [
+      #    {
+      #       "id": "1",
+      #       "title": "Tiny and Perfect eCommerce Template",
+      #       "description": "Zay Shop is an eCommerce HTML5 CSS template withlatest version of Bootstrap 5 (beta 1). This template is 100 free provided by",
+      #       "cover": "/static/images/18.jpg",
+      #    },
+      #    {
+      #       "id": "2",
+      #       "title": "Tiny and Perfect eCommerce Template",
+      #       "description": "Zay Shop is an eCommerce HTML5 CSS template withlatest version of Bootstrap 5 (beta 1). This template is 100 free provided by",
+      #       "cover": "/static/images/18.jpg",
+      #    },
+      #    {
+      #       "id": "2",
+      #       "title": "Tiny and Perfect eCommerce Template",
+      #       "description": "Zay Shop is an eCommerce HTML5 CSS template withlatest version of Bootstrap 5 (beta 1). This template is 100 free provided by",
+      #       "cover": "/static/images/18.jpg",
+      #    },
+      # ]
 
       context = { "categories": categories, "featured_list": featured, "banner_list":banner_list }
       return render(request, "shop/Home.html", context)

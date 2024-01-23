@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Brand, Category, Product, ProductImage, Review, ProductType, ProductGroup
+from .models import Brand, Category, Product, ProductImage, Review, ProductType, ProductGroup,Banner
 
 
 
@@ -43,6 +43,10 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductImageAdmin(admin.ModelAdmin):
    list_display= ("product", "id", "get_image")
    list_filter= ("product",)
+   
+class BannerAdmin(admin.ModelAdmin):
+   list_display= ("title", "id", "get_cover")
+
 
      
 
@@ -52,6 +56,7 @@ admin.site.register(ProductGroup, ProductGroupAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(Banner, BannerAdmin)
 
 
 
