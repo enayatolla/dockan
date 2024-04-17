@@ -85,14 +85,15 @@ class ProductManager(models.Manager):
    def get_all(self):
       return self.all().order_by("-created_at")
 
+
 class Product(models.Model):
    id= models.BigAutoField(primary_key= True, editable=False)
    brand= models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, related_name='products')
    category= models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products')
    group= models.ForeignKey(ProductGroup, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
    user= models.ForeignKey(User, on_delete= models.SET_NULL, null=True, related_name='products')
-   title= models.TextField(max_length=256, null=True)
-   slug= models.SlugField(max_length=256, null=True , blank=True, allow_unicode=True)
+   title= models.CharField(max_length=256, null=True)
+   slug= models.SlugField(max_length=256, null=True, blank=True, allow_unicode=True)
    description= models.TextField(null=True, blank= True)
    created_at= models.DateTimeField(auto_now_add= True, null=True)
    cover= models.ImageField(upload_to='images/product_cover',null=False)
@@ -105,13 +106,15 @@ class Product(models.Model):
       return reverse("shop:product_detail", kwargs={"pk": self.id, "slug": self.slug})
    
    def save(self, *args, **kwargs):
-      self.slug = slugify(self.title, allow_unicode= True)
+      if not self.slug == slugify(self.title, allow_unicode= True):
+         self.slug = slugify(self.title, allow_unicode= True)
+         print('edit slug')
       group = ProductGroup.objects.filter(slug= self.slug).first()
       if group:
          self.group = group 
       else:
          self.group= ProductGroup.objects.create(title=self.title, slug=self.slug)
-      super(Product, self).save(*args, **kwargs)
+      return super(Product, self).save(*args, **kwargs)
       
    def get_cover(self):
       if self.cover:
@@ -187,3 +190,9 @@ class Banner(models.Model):
          )
       else:
          return format_html("<h4>no cover</h4>")
+
+
+
+
+
+

@@ -18,7 +18,7 @@ class TypeInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
    list_display = ( "title", "group", "user", "get_cover")
    list_filter = ( "category", "brand")
-   prepopulated_fields = {'slug':("title",)}
+   prepopulated_fields = {'slug':('title',)}
    inlines = ( PhotoInline, TypeInline )
    
 class ProductInline(admin.TabularInline):
