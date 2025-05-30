@@ -18,7 +18,7 @@ db.sqlite3-journal
 # <django-project-name>/staticfiles/
 /media
 /files
-/static
+/staticfiles
 /db
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
@@ -137,6 +137,9 @@ celerybeat.pid
 
 # Environments
 .env
+*.env
+.env.*
+*.env.*
 .venv
 env/
 venv/

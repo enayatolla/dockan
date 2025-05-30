@@ -1,0 +1,216 @@
+{% extends '_base.html' %} {% load mptt_tags %} {% load static %}
+
+<html>
+   <title>
+      {% block title %} seller-register / ثبت نام فروشنده {% endblock title %}
+   </title>
+
+   <body>
+      {% block content %}
+      <main class="min-h-screen bg-gray-50 dark1:bg-gray-900">
+         <div class="px-6 md:px-8 py-8 mx-auto">
+            <div
+               class="mx-auto bg-white rounded-lg shadow-2xl dark1:border md:mt-0 max-w-lg md:max-w-xl dark1:bg-gray-800 dark1:border-gray-700"
+            >
+               <div class="space-y-4 md:space-y-6 py-6 px-4 md:p-8">
+                  <h1
+                     class="font-bold leading-tight tracking-tight text-gray-900 text-base md:text-lg dark1:text-white"
+                  >
+                     اطلاعات فروشگاه خود را وارد کنید
+                  </h1>
+
+                  <form
+                     method="post"
+                     action="{% url 'sellers:seller_register' %}"
+                     class="flex flex-col w-full px-0 py-4 text-xs sm:text-sm"
+                     enctype="multipart/form-data"
+                  >
+                     {% csrf_token %} {% for field in form %}
+                     <div class="flex flex-col gap-2">
+                        <div
+                           class="w-full flex flex-col gap-1 items-start justify-between sm:flex-row"
+                        >
+                           <p class="w-36 sm:w-24">{{ field.label_tag }}</p>
+                           <p class="flex-1 w-full">{{ field }}</p>
+                        </div>
+
+                        <p class="text-danger">
+                           {% if field.errors %}{{ field.errors }}{% endif %}
+                        </p>
+                        <p class="help" id="{{ field.auto_id }}_helptext">
+                           {% if field.help_text %} {{ field.help_text|safe }}
+                           {% endif %}
+                        </p>
+                     </div>
+                     {% endfor %}
+
+                     <button
+                        type="submit"
+                        name="submit"
+                        class="border-2 border-gray-300 rounded p-4 mt-4 hover:text-sky-500 hover:border-sky-300"
+                     >
+                        ارسال اطلاعات
+                     </button>
+                  </form>
+               </div>
+            </div>
+         </div>
+
+         {% comment %}
+         <div
+            class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+         >
+            <div
+               class="w-full bg-white rounded-lg shadow-2xl dark1:border md:mt-0 sm:max-w-md xl:p-0 dark1:bg-gray-800 dark1:border-gray-700"
+            >
+               <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                  <h1
+                     class="font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark1:text-white"
+                  >
+                     وارد حساب کاربری خود شوید
+                  </h1>
+                  <!-- Form -->
+                  <form
+                     class="space-y-4 md:space-y-6"
+                     method="post"
+                     action="{% url 'home:login' %}"
+                  >
+                     {% csrf_token %} {% if messages %}
+                     <div class="">
+                        {% for message in messages %}
+                        <p class="text-red-500 text-xs">{{ message }}</p>
+                        {% endfor %}
+                     </div>
+                     {% endif %}
+
+                     <div>
+                        <label
+                           for="username"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark1:text-white"
+                           >نام</label
+                        >
+                        <input
+                           dir="ltr"
+                           type="username"
+                           name="username"
+                           id="username"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark1:bg-gray-700 dark1:border-gray-600 dark1:placeholder-gray-400 dark1:text-white dark1:focus:ring-blue-500 dark1:focus:border-blue-500"
+                           placeholder=""
+                           required=""
+                        />
+                     </div>
+                     <div>
+                        <label
+                           for="password"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark1:text-white"
+                           >نام خانوادگی</label
+                        >
+                        <input
+                           dir="ltr"
+                           type="password"
+                           name="password"
+                           id="password"
+                           placeholder=""
+                           class="bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark1:bg-gray-700 dark1:border-gray-600 dark1:placeholder-gray-400 dark1:text-white dark1:focus:ring-blue-500 dark1:focus:border-blue-500"
+                           required=""
+                        />
+                     </div>
+                     <div>
+                        <label
+                           for="password"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark1:text-white"
+                           >نام فروشگاه</label
+                        >
+                        <input
+                           dir="ltr"
+                           type="password"
+                           name="password"
+                           id="password"
+                           placeholder=""
+                           class="bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark1:bg-gray-700 dark1:border-gray-600 dark1:placeholder-gray-400 dark1:text-white dark1:focus:ring-blue-500 dark1:focus:border-blue-500"
+                           required=""
+                        />
+                     </div>
+                     <div>
+                        <label
+                           for="password"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark1:text-white"
+                           >آدرس مکان فروشگاه</label
+                        >
+                        <input
+                           dir="ltr"
+                           type="password"
+                           name="password"
+                           id="password"
+                           placeholder=""
+                           class="bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark1:bg-gray-700 dark1:border-gray-600 dark1:placeholder-gray-400 dark1:text-white dark1:focus:ring-blue-500 dark1:focus:border-blue-500"
+                           required=""
+                        />
+                     </div>
+                     <div>
+                        <label
+                           for="password"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark1:text-white"
+                           >نشانی اینترنتی فروشگاه</label
+                        >
+                        <input
+                           dir="ltr"
+                           type="password"
+                           name="password"
+                           id="password"
+                           placeholder=""
+                           class="bg-gray-50 border border-gray-300DDD text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 border-blue-400"
+                           required=""
+                        />
+                     </div>
+
+                     <div class="flex items-center justify-between">
+                        <label
+                           for="remember"
+                           class="select-none cursor-pointer text-xs"
+                        >
+                           <input
+                              id="remember"
+                              name="remember"
+                              aria-describedby="remember"
+                              type="checkbox"
+                              class="w-4 h-4 border border-blue-400 rounded bg-gray-50 focus:ring-3"
+                              checked
+                           />
+
+                           <span class="select-none mr-2"
+                              >مرا به خاطر بسپار</span
+                           >
+                        </label>
+
+                        <a
+                           href="/forgot-password"
+                           class="text-xs hover:text-pink-600"
+                           >رمز ورود را فراموش کردید؟</a
+                        >
+                     </div>
+
+                     <button
+                        type="submit"
+                        name="submit"
+                        class="w-full border focus:ring-4 rounded text-sm py-3"
+                     >
+                        ورود
+                     </button>
+
+                     <p
+                        class="text-sm font-light text-gray-500 dark1:text-gray-400"
+                     >
+                        آیا قبلا ثبت نام نکردید؟
+                        <a href="/register" class="text-red-500"> ثبت نام </a>
+                     </p>
+                  </form>
+               </div>
+            </div>
+         </div>
+         {% endcomment %}
+      </main>
+
+      {% endblock content %}
+   </body>
+</html>

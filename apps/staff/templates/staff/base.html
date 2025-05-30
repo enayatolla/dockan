@@ -1,0 +1,145 @@
+{% load static tailwind_tags %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <style>
+         @font-face {
+            font-family: IRANYekanXFaNum_Medium;
+            src: url("{% static 'fonts/iranyekan/woff2/IRANYekanXFaNum-Medium.woff2' %}")
+               format("woff2");
+         }
+         @font-face {
+            font-family: IRANYekanXFaNum_Regular;
+            src: url("{% static 'fonts/iranyekan/woff2/IRANYekanXFaNum-Regular.woff2' %}")
+               format("woff2");
+         }
+         @font-face {
+            font-family: IRANYekanXFaNum_Light;
+            src: url("{% static 'fonts/iranyekan/woff2/IRANYekanXFaNum-Light.woff2' %}")
+               format("woff2");
+         }
+         @font-face {
+            font-family: SamimRegular;
+            src: url("{% static 'fonts/Darya@fontsclub.ttf' %}") format("woff2");
+         }
+         body {
+            font-family: IRANYekanXFaNum_Medium, sans-serif;
+         }
+      </style>
+      <title>{% block title %} {% endblock %}</title>
+
+      {% tailwind_css %}
+   </head>
+
+   <body>
+      <main>
+         <!-- Navbar -->
+         <nav class="p-4 flex justify-between items-center bg-blue-500">
+            <h1>
+               <a href="/" class="p-1 text-pink-600">دکان</a>
+            </h1>
+
+            <button
+               id="toggleSidebar"
+               class="text-white focus:outline-none lg:hidden"
+            >
+               <svg
+                  class="fill-current h-6 w-6"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+               >
+                  <title>Menu</title>
+                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+               </svg>
+            </button>
+         </nav>
+
+         <!-- Main Layout -->
+         <div class="w-screen flex relative min-h-screen bg-gray-50">
+            <!-- Backdrop -->
+            <div
+               id="backdrop"
+               class="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm hidden lg:hidden z-30"
+            ></div>
+            <!-- Sidebar -->
+            <div
+               id="sidebar"
+               class="sidebar bg-gray-800 text-white w-64 fixed lg:absolute inset-y-0 right-0 transform translate-x-full lg:translate-x-0 z-40 min-h-screen transition duration-300 ease-out"
+               style="font-family: IRANYekanXFaNum_Regular"
+            >
+               <div>
+                  <div
+                     class="flex flex-row justify-between p-4 lg:hidden w-full border-b"
+                  >
+                     <div class="flex items-center">
+                        <a href="/" class="p-1 text-pink-600"> دکانچی </a>
+                     </div>
+                     <div class="">
+                        <button
+                           class="w-8 h-8 border rounded-full"
+                           id="sideBarHideBtn"
+                        >
+                           x
+                        </button>
+                     </div>
+                  </div>
+
+                  {% if user.is_seller %}
+                  <ul class="mt-4">
+                     <li>
+                        <a
+                           href="{% url 'staff:seller_profile' %}"
+                           class="block px-4 py-3 hover:bg-gray-700"
+                           >حساب کاربری</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           href="{% url 'staff:my_market' %}"
+                           class="block px-4 py-3 hover:bg-gray-700"
+                           >فروشگاه من</a
+                        >
+                     </li>
+
+                     <li>
+                        <a
+                           href="{% url 'staff:order_list' %}"
+                           class="block px-4 py-3 hover:bg-gray-700"
+                           >لیست سفارشات</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           href="{% url 'staff:product_list' %}"
+                           class="block px-4 py-3 hover:bg-gray-700"
+                           >لیست محصولات</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           href="{% url 'staff:settings' %}"
+                           class="block px-4 py-3 text-red-700 hover:bg-gray-700"
+                           >تنظیمات</a
+                        >
+                     </li>
+                  </ul>
+                  {% endif %}
+               </div>
+            </div>
+
+            <!-- Main Content -->
+            <div
+               class="flex-grow p-4 lg:mr-64 lg:transition-all duration-300 bg-gray-50"
+            >
+               {% block staff_content %} {% endblock staff_content %}
+            </div>
+         </div>
+
+         <script src="{% static 'js/dashboard/script.js' %}" defer></script>
+      </main>
+   </body>
+</html>

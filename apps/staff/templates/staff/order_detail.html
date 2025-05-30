@@ -1,0 +1,343 @@
+{% extends "sellers/seller_base.html" %}<br />
+{% load static %} <br />
+{% load jalali_filters %} <br />
+
+{% block seller_panel%}
+<head>
+   <title>{% block title %}جزعیات سفارش{% endblock title %}</title>
+</head>
+
+<main class="min-h-screen">
+   <div class="p-2">
+      <section class="flex items-center justify-between mb-6">
+         <button
+            onclick="history.back()"
+            class="flex gap-2 items-center border py-2 px-4 rounded"
+         >
+            <svg
+               xmlns="http://www.w3.org/2000/svg"
+               width="20px"
+               height="20px"
+               viewBox="0 0 24 24"
+               fill="none"
+            >
+               <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12.2929 4.29289C12.6834 3.90237 13.3166 3.90237 13.7071 4.29289L20.7071 11.2929C21.0976 11.6834 21.0976 12.3166 20.7071 12.7071L13.7071 19.7071C13.3166 20.0976 12.6834 20.0976 12.2929 19.7071C11.9024 19.3166 11.9024 18.6834 12.2929 18.2929L17.5858 13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H17.5858L12.2929 5.70711C11.9024 5.31658 11.9024 4.68342 12.2929 4.29289Z"
+                  fill="#000000"
+               />
+            </svg>
+            <span>بازگشت</span>
+         </button>
+
+         <h1 class="relative w-fit text-xl font-medium text-zinc-700">
+            جزئیات سفارش {{ order.id }}#
+         </h1>
+
+         <div></div>
+      </section>
+
+      <section class="mb-8">
+         <h1 class="mb-8 flex items-center gap-x-4 text-lg text-zinc-600">
+            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            وضعیت سفارش
+         </h1>
+
+         <div class="rounded-lg border p-4 text-sm bg-white">
+            <div
+               class="flex flex-col gap-6 pb-6 xl:flex-row xl:justify-between xl:gap-16"
+            >
+               <div class="flex justify-between w-full md:w-60 flex-col gap-4">
+                  <div class="flex items-center justify-between">
+                     <span class="text-gray-500 ml-4">نوع پرداخت</span>
+                     {% if order.is_online_pay %}
+                     <span class="text-emerald-500">پرداخت آنلاین</span>
+                     {% else %}
+                     <span class="text-blue-500">پرداخت درب منزل</span>
+                     {% endif %}
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                     <span class="text-gray-500 ml-4">وضعیت پرداخت</span>
+                     {% if order.is_paid %}
+                     <span class="text-emerald-500">پرداخت شده</span>
+                     {% else %}
+                     <span class="text-yellow-500">پرداخت نشده</span>
+                     {% endif %}
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                     <div class="text-sm text-zinc-500">کد پیگیری سفارش</div>
+                     <div class="text-sm text-zinc-600">{{ order.id }}</div>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                     <div class="text-sm text-zinc-500">مبلغ کل</div>
+                     <div class="text-emerald-500">
+                        <span class="font-bold md:text-lg">
+                           {{ order.total_price }}
+                        </span>
+                        <span class="text-xs mr-1">تومان</span>
+                     </div>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                     <div class="text-sm text-zinc-500">تاریخ</div>
+                     <div class="text-sm text-zinc-600">
+                        {{ order.created_at|jalali_date }}
+                     </div>
+                  </div>
+
+                  <div class="flex items-center justify-between">
+                     <div class="text-sm text-zinc-500">ساعت</div>
+                     <div class="text-sm text-zinc-600">
+                        {{ order.created_at|jalali_time }}
+                     </div>
+                  </div>
+               </div>
+
+               <!-- {/* order status */} -->
+               <div class="flex flex-grow flex-col gap-y-4">
+                  <p class="flex items-center gap-x-2">
+                     <span class="ml-4">وضعیت ارسال</span>
+                     {% if order.is_delivered %}
+                     <span class="text-green-500">تحویل داده شد</span>
+                     {% elif order.is_sending %}
+                     <span class="text-blue-400">ارسال شده است</span>
+                     {% else %}
+                     <span class="text-yellow-500">در حال برسی</span>
+                     {% endif %}
+                  </p>
+                  <div class="relative h-2 w-full rounded-full bg-gray-200">
+                     <span
+                        class="absolute inset-y-0 right-0 w-[30%] rounded-full bg-yellow-500"
+                     ></span>
+                  </div>
+                  <div
+                     class="flex items-center justify-between text-sm text-yellow-500"
+                  >
+                     <span></span>
+                     <span></span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <section class="mb-8">
+         <h1 class="mb-8 flex items-center gap-x-4 text-lg text-zinc-600">
+            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            مبلغ مرسوله
+         </h1>
+
+         <div class="text-sm rounded-lg border p-4 bg-white">
+            <div class="flex flex-col gap-4 w-full">
+               <div class="flex justify-between gap-x-2 lg:justify-start">
+                  <div class="w-32 text-zinc-500">کد پیگیری مرسوله</div>
+                  <div class="w-32 text-zinc-600">{{ order.id }}</div>
+               </div>
+
+               <div class="flex justify-between gap-x-2 lg:justify-start">
+                  <p class="w-32 text-zinc-500">مبلغ مرسوله</p>
+                  <p class="text-emerald-500">
+                     <span> {{ order.total_price }} </span>
+                     <span class="text-xs mr-1">تومان</span>
+                  </p>
+               </div>
+
+               <div class="flex justify-between gap-x-2 lg:justify-start">
+                  <p class="w-32 text-zinc-500">تخفیف کالاها</p>
+                  <p class="text-red-500 dark:text-red-400">
+                     <span class=""> {{ order.total_offers }} </span>
+                     <span class="text-xs mr-1">تومان</span>
+                  </p>
+               </div>
+
+               <div class="flex justify-between gap-x-2 lg:justify-start">
+                  <p class="w-32 text-zinc-500">روش ارسال</p>
+                  <p class="flex text-zinc-600">
+                     <sapn class="ml-2">{{ order.shipping_method.title }}</sapn>
+                     <span>{{ order.shipping_method.description }}</span>
+                  </p>
+               </div>
+
+               <div class="flex justify-between gap-x-2 lg:justify-start">
+                  <div class="w-32 text-zinc-500">هزینه ارسال</div>
+                  <div class="text-emerald-500">
+                     <span class=""> {{ order.shipping_method.price }} </span>
+                     <span class="text-xs mr-1">تومان</span>
+                  </div>
+               </div>
+
+               <div class="flex justify-between gap-x-2 lg:justify-start">
+                  <div class="w-32 text-zinc-500">مبلغ پرداختی</div>
+                  <div class="text-emerald-500">
+                     <span class="font-bold md:text-lg">
+                        {{ order.paid_price }}
+                     </span>
+                     <span class="text-xs mr-1">تومان</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <section class="mb-8">
+         <h1 class="mb-8 flex items-center gap-x-4 text-lg text-zinc-600">
+            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            آدرس تحویل سفارش
+         </h1>
+         <div class="block rounded-lg border p-4 bg-white">
+            <div class="mb-4 flex items-center justify-between gap-x-2 sm:mb-2">
+               <p
+                  class="line-clamp-2 h-10 text-sm text-zinc-600 xs:text-base sm:line-clamp-1 sm:h-6"
+               >
+                  {{ order.shipping_address.postal_address }}
+               </p>
+            </div>
+            <div class="flex items-center justify-between gap-x-2">
+               <div class="flex gap-2 text-sm text-zinc-500">
+                  <p>{{ order.shipping_address.first_name }}</p>
+                  <p>{{ order.shipping_address.last_name }}</p>
+               </div>
+               <div>
+                  <button
+                     data-modal-target="address-change-modal"
+                     data-modal-toggle="address-change-modal"
+                     class="border text-xs p-2 rounded"
+                  >
+                     تغییر آدرس تحویل
+                  </button>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <section class="mb-8">
+         <h1 class="mb-8 flex items-center gap-x-4 text-lg text-zinc-600">
+            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            اقلام سفارش
+            <span class="text-sm text-zinc-500">
+               ( {{ order.total_items }} کالا )
+            </span>
+         </h1>
+         <ul class="border rounded-lg p-4 divide-y divide-gray-300 bg-white">
+            {% for order_item in order.order_items.all %}
+            <li>
+               <div class="py-4 sm:py-6">
+                  <div
+                     class="grid grid-cols-2 items-center justify-start gap-2 xs:grid-cols-3 xs:gap-6 sm:grid-cols-4 xl:grid-cols-6"
+                  >
+                     <!-- {/* Image */} -->
+                     <div class="flex justify-center row-span-2 min-w-fit">
+                        <img
+                           src="{{ order_item.product.cover.url }}"
+                           loading="lazy"
+                           class="w-25 rounded-lg sm:w-28"
+                        />
+                     </div>
+                     <!-- {/* Detail */} -->
+                     <div
+                        class="row-span-2 space-y-4 xs:col-span-2 sm:col-span-3 xl:col-span-5"
+                     >
+                        <!-- {/* Title */} -->
+                        <p class="line-clamp-2 text-sm text-zinc-700">
+                           {{ order_item.product.title }}
+                        </p>
+                        <!-- {/* Variant */} -->
+                        <div class="flex items-center gap-x-2">
+                           <span class="ml-3">
+                              {{ order_item.variant.title }}
+                           </span>
+                           <span class="text-xs text-zinc-600 xs:text-sm">
+                              {{ order_item.variant.value }}
+                           </span>
+                        </div>
+                        <div
+                           class="flex items-start gap-x-2 text-red-500 xs:items-center"
+                        >
+                           <div class="text-xs xs:text-sm">تخفیف</div>
+                           <div class="text-red-500">
+                              <span class="text-sm">
+                                 {{ order_item.total_offers }}
+                              </span>
+                              <span class="text-xs"> تومان </span>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- {/* Quantity */} -->
+                     <div class="text-sm flex justify-center">
+                        <div
+                           class="flex h-10 w-24 items-center justify-center rounded-lg border px-4 py-1"
+                        >
+                           {{ order_item.quantity }}
+                        </div>
+                     </div>
+                     <!-- {/* Price */} -->
+                     <div
+                        class="row-span-2 xs:col-span-2 sm:col-span-3 xl:col-span-5"
+                     >
+                        <div
+                           class="text-emerald-500 xs:col-span-2 sm:col-span-3 lg:text-lg xl:col-span-5"
+                        >
+                           <span class="font-bold">
+                              {{ order_item.final_price }}
+                           </span>
+                           <span class="text-xs mr-1"> تومان </span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            {% endfor %}
+         </ul>
+      </section>
+
+      <section class="mb-8">
+         <div class="flex items-center justify-start mb-6">
+            <h1 class="flex items-center gap-x-4 text-lg text-zinc-600 ml-8">
+               <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+               <span>تنظیمات</span>
+            </h1>
+
+            <div>
+               {% if messages %} {% for message in messages %}
+               <p
+                  class="border border-green-500 px-6 py-2 rounded-lg text-green-500 text-xs"
+               >
+                  {{ message }}
+               </p>
+               {% endfor %} {% endif %}
+            </div>
+         </div>
+
+         <form
+            class="p-4 bg-white border rounded-lg"
+            method="post"
+            action="{{ order.get_absolute_url }}"
+         >
+            {% csrf_token %} {{ form.non_field_errors }}
+            <div class="space-y-4 mb-8">
+               {% for field in form %}
+               <div class="flex justify-between w-40">
+                  <span>{{ field.label }}</span>
+                  <span>{{ field }}</span>
+                  <span>{{ field.errors }}</span>
+               </div>
+               {% endfor %}
+            </div>
+
+            <button
+               class="border rounded px-8 py-2"
+               type="submit"
+               name="submit"
+            >
+               زخیره
+            </button>
+         </form>
+      </section>
+   </div>
+</main>
+
+{% endblock seller_panel %}

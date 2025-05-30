@@ -5,11 +5,7 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link
-         rel="icon"
-         type="image/x-icon"
-         href="{% static 'images/logo-8.png' %}"
-      />
+      <link rel="icon" type="image/x-icon" href="{% static 'images/logo-8.png' %}" />
       <style>
          @font-face {
             font-family: Shabnam;
@@ -48,20 +44,11 @@
                      <h4>فیلتر قیمت</h4>
                      <div class="form-group">
                         <label for="min_price">پایین ترین قیمت</label>
-                        <input
-                           class="form-control"
-                           type="text"
-                           value=""
-                           id="min_price"
-                           name="min_price"
-                           required
-                        />
+                        <input class="form-control" type="text" value="" id="min_price" name="min_price" required />
                      </div>
 
                      <div class="form-group">
-                        <label class="col-4" for="max_price"
-                           >بالاترین قیمت</label
-                        >
+                        <label class="col-4" for="max_price">بالاترین قیمت</label>
                         <input
                            class="form-control col-2 cole-sm-2"
                            type="text"
@@ -79,11 +66,7 @@
                         {% for color in colors %}
                         <div class="form-group">
                            <label for="colors">{{ color }}</label>
-                           <input
-                              name="colors"
-                              value="{{ color }}"
-                              type="checkbox"
-                           />
+                           <input name="colors" value="{{ color }}" type="checkbox" />
                         </div>
                         {% endfor %}
                      </div>
@@ -95,11 +78,7 @@
                         {% for size in sizes %}
                         <div class="form-group">
                            <label for="colors">{{ size }}</label>
-                           <input
-                              name="sizes"
-                              value="{{ size }}"
-                              type="checkbox"
-                           />
+                           <input name="sizes" value="{{ size }}" type="checkbox" />
                         </div>
                         {% endfor %}
                      </div>
@@ -136,12 +115,7 @@
                         <img
                            class="card-img rounded-0 img-fluid"
                            src="{{ product.cover.url }}"
-                           style="
-                              width: 100%;
-                              aspect-ratio: 1;
-                              object-fit: cover;
-                              object-position: center top;
-                           "
+                           style="width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center top"
                         />
                      </a>
 
@@ -152,9 +126,7 @@
                         >
                            {{ product.title|slice:'0:80' }}
                         </a>
-                        <ul
-                           class="w-100 list-unstyled d-flex justify-content-between mb-0"
-                        >
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                            <li>M/L/X/XL</li>
                         </ul>
                         <p class="text-center mb-0">
@@ -180,19 +152,13 @@
                      </li>
 
                      <li class="page-item">
-                        <a
-                           class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
-                           href="#"
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#"
                            >2</a
                         >
                      </li>
 
                      <li class="page-item">
-                        <a
-                           class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark"
-                           href="#"
-                           >3</a
-                        >
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
                      </li>
                   </ul>
                </div>
@@ -204,10 +170,7 @@
       <!-- End Content -->
 
       <!-- Start Brands -->
-      <section
-         class="bg-light py-1"
-         style="max-width: 100vw; overflow-x: hidden"
-      >
+      <section class="bg-light py-1" style="max-width: 100vw; overflow-x: hidden">
          <div class="container my-1">
             <div class="row text-center py-1">
                <h1 class="h1">برند های محصولات</h1>
@@ -216,12 +179,7 @@
                   <div dir="rtl" class="row d-flex flex-row">
                      <!--Controls-->
                      <div class="col-1 align-self-center">
-                        <a
-                           class="h1"
-                           href="#multi-item-example"
-                           role="button"
-                           data-bs-slide="next"
-                        >
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
                            <i class="text-light fas fa-chevron-left"></i>
                            next
                         </a>
@@ -236,10 +194,7 @@
                            data-bs-ride="carousel"
                         >
                            <!--Slides-->
-                           <div
-                              class="carousel-inner product-links-wap"
-                              role="listbox"
-                           >
+                           <div class="carousel-inner product-links-wap" role="listbox">
                               <!--first slide-->
                               <div class="carousel-item active">
                                  <div class="row">
@@ -285,12 +240,7 @@
 
                      <!--Controls-->
                      <div class="col-1 align-self-center">
-                        <a
-                           class="h1"
-                           href="#multi-item-example"
-                           role="button"
-                           data-bs-slide="prev"
-                        >
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
                            prev
                            <i class="text-light fas fa-chevron-right"></i>
                         </a>

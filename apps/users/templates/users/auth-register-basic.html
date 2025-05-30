@@ -6,11 +6,7 @@
    <head>
       {% include 'users/includes/head.html' %}
       <title>ثبت نام کابر</title>
-      <link
-         rel="icon"
-         type="image/x-icon"
-         href="{% static 'users/img/favicon/favicon.ico' %}"
-      />
+      <link rel="icon" type="image/x-icon" href="{% static 'users/img/favicon/favicon.ico' %}" />
    </head>
 
    <body>
@@ -24,80 +20,60 @@
                   <div class="card-body">
                      <h4 class="mb-2">ساخت حساب کاربری</h4>
 
-                     <form
-                        id="formAuthentication"
-                        action="{% url 'users:user_register' %}"
-                        method="post"
-                     >
-                        {% csrf_token %} {% for err in form.non_field_errors %}
-                        <div>{{ err }}</div>
-                        {% endfor %}
-                        <!--  -->
+                     <form id="formAuthentication" action="{% url 'users:user_register' %}" method="post">
+                        {% csrf_token %}
 
+                        <!-- non_field_errors -->
+                        {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+
+                        <!-- username -->
                         {% if form.username.errors %}
-                        <div
-                           class="text font-weight-light text-danger p-1 mt-1"
-                        >
-                           {{ form.username.errors }}
-                        </div>
-                        {% endif %} {% if form.email.errors %}
-                        <div
-                           class="text font-weight-light text-danger p-1 mt-1"
-                        >
-                           {{ form.email.errors }}
-                        </div>
-                        {% endif %} {% if form.phone_number.errors %}
-                        <div
-                           class="text font-weight-light text-danger p-1 mt-1"
-                        >
-                           {{ form.phone_number.errors }}
-                        </div>
-                        {% endif %} {% if form.password2.errors %}
-                        <div
-                           class="text font-weight-light text-danger p-1 mt-1"
-                        >
-                           {{ form.password2.errors }}
-                        </div>
+                        <div class="text font-weight-light text-danger p-1 mt-1">{{ form.username.errors }}</div>
+                        {% endif %}
+
+                        <!-- Email -->
+                        {% if form.email.errors %}
+                        <div class="text font-weight-light text-danger p-1 mt-1">{{ form.email.errors }}</div>
+                        {% endif %}
+
+                        <!-- phone_number -->
+                        {% if form.phone_number.errors %}
+                        <div class="text font-weight-light text-danger p-1 mt-1">{{ form.phone_number.errors }}</div>
+                        {% endif %}
+
+                        <!-- password2 -->
+                        {% if form.password2.errors %}
+                        <div class="text font-weight-light text-danger p-1 mt-1">{{ form.password2.errors }}</div>
                         {% endif %}
 
                         <div class="mb-3">
-                           <label for="id_username" class="form-label">
-                              نام کاربری
-                           </label>
+                           <label for="id_username" class="form-label"> نام کاربری </label>
                            {{ form.username }}
                         </div>
 
                         <div class="mb-3">
-                           <label for="id_phone_number" class="form-label"
-                              >تلفن همراه</label
-                           >
+                           <label for="id_phone_number" class="form-label">تلفن همراه</label>
                            {{ form.phone_number }}
                         </div>
 
                         <div class="mb-3">
-                           <label for="id_email" class="form-label"
-                              >ایمیل</label
-                           >
+                           <label for="id_email" class="form-label">ایمیل</label>
 
                            {{ form.email }}
                         </div>
 
                         <div class="mb-3 form-password-toggle">
-                           <label class="form-label" for="id_password1">
-                              رمز عبور
-                           </label>
+                           <label class="form-label" for="id_password1"> رمز عبور </label>
                            <div dir="ltr" class="input-group input-group-merge">
                               {{ form.password1 }}
-                              <span class="input-group-text cursor-pointer"
-                                 ><i class="bx bx-hide"></i
-                              ></span>
+                              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                            </div>
                         </div>
 
                         <div class="mb-3 form-password-toggle">
-                           <label class="form-label" for="id_password2">
-                              تکرار رمز عبور
-                           </label>
+                           <label class="form-label" for="id_password2"> تکرار رمز عبور </label>
                            <div dir="ltr" class="input-group input-group-merge">
                               {{ form.password2 }}
                               <span class="input-group-text cursor-pointer">
@@ -115,26 +91,15 @@
                                  name="terms"
                                  dir="rtl"
                               />
-                              <label
-                                 class="form-check-label"
-                                 for="terms-conditions"
-                              >
+                              <label class="form-check-label" for="terms-conditions">
                                  با
-                                 <a href="javascript:void(0);"
-                                    >قوانین و خط مش</a
-                                 >
+                                 <a href="javascript:void(0);">قوانین و خط مش</a>
                                  وبسایت موافقم
                               </label>
                            </div>
                         </div>
 
-                        <button
-                           type="submit"
-                           name="submit"
-                           class="btn btn-primary d-grid w-100"
-                        >
-                           ثبت نام
-                        </button>
+                        <button type="submit" name="submit" class="btn btn-primary d-grid w-100">ثبت نام</button>
                         <!--  -->
                      </form>
 

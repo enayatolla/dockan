@@ -3,24 +3,22 @@ version: "3.8"
 services:
    postgre:
       image: postgres:15.4
-      container_name: dockan-postgres
-      ports:
-         - 5432:5432
+      container_name: postgres
       volumes:
-         - ./db/postgresql/data:/var/lib/postgresql/data
+         - dokkan_postgres_db:/var/lib/postgresql/data
       environment:
          POSTGRES_USER: postgres
          POSTGRES_PASSWORD: postgres
          POSTGRES_DB: shop
       networks:
-         - dockan_django_postgre
+         - dockannet
 
    redis:
       image: redis:7.2.4
       container_name: redis-db
       restart: always
       networks:
-         - dockan_django_postgre
+         - dockannet
       ports:
          - 6379:6379
       volumes:
@@ -29,28 +27,20 @@ services:
    django:
       build: .
       image: dockan_django
-      container_name: dokkan-django
+      container_name: dokkan
       restart: always
       volumes:
          - .:/app
       ports:
-         # localPort:dockerNetworkPort
-         - 80:8000
-      command: >
-         sh -c "python manage.py makemigrations &&
-                python manage.py migrate &&
-                python manage.py collectstatic --no-input --clear &&
-                python manage.py runserver 0.0.0.0:8000"
+         - 8000:8000
       networks:
-         - dockan_django_postgre
+         - dockannet
       depends_on:
          - postgre
 
-volumes:
-   nothing:
-
 networks:
-   dockan_django_postgre:
-      external: false
-      driver: bridge
-      name: dockan_django_postgre
+   dockannet:
+
+volumes:
+   dokkan_postgres_db:
+      external: true

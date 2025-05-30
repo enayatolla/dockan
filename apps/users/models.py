@@ -78,14 +78,12 @@ class User(AbstractBaseUser, PermissionsMixin):
       validators=[username_validator],
       error_messages={"unique": _("A user with that username already exists.")},
    )
-   first_name = models.CharField(_("first name"), max_length=150, blank=True)
-   last_name = models.CharField(_("last name"), max_length=150, blank=True)
    email = models.EmailField(_("email address"),max_length=256, null=True, blank=True)
    phone_number = models.CharField(_("phone number"),max_length=14, null=True, blank=True)
    is_staff = models.BooleanField(_("staff status"), default=False)
    is_active = models.BooleanField(_("active"), default=True)
    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
-   date_of_birth = models.DateField(_("date of birth"), null=True, blank=True)
+   is_seller = models.BooleanField(_("is seller"), default=False)
    objects = UserManager()
    EMAIL_FIELD = "email"
    USERNAME_FIELD = "username"

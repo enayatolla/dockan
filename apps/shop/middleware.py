@@ -9,12 +9,6 @@ class ShopMiddleware:
       }
       
    def __call__(self, request):
-      # print(request.path)
-      # print(request.headers['Host'])
-      # print(request.headers['Accept-Language'])
-      # print(request.META['REQUEST_METHOD'])
-      # print(request.META['HTTP_USER_AGENT'])
-      
       response = self.get_response(request)
       return response
 

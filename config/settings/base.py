@@ -4,6 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-)np=hkxkob)t(7u#s7&#pvrn&(%46+uej-6#-ob417pp__kwq8'
 ALLOWED_HOSTS = ['*']
+INTERNAL_IPS = [ "127.0.0.1", ]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -13,12 +14,17 @@ THIRD_PARTY_APPS = [
     'django_render_partial',
     'django_social_share',
     'django_celery_beat',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 ]
 LOCAL_APPS = [
     'apps.apis',
     'apps.shop',
     'apps.cart',
     'apps.users',
+    'apps.products',
+    'apps.staff',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,6 +39,7 @@ INSTALLED_APPS = [
 
 APPLY_MIDDLEWARE=[
     'apps.shop.middleware.ShopMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,19 +72,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shop',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'dockan-postgres' if str(BASE_DIR) == "/app" else 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation
@@ -115,14 +118,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT= BASE_DIR / 'static'
+STATIC_ROOT= BASE_DIR / 'staticfiles'
 
-MEDIA_URL = ''
+MEDIA_URL = 'media/'
 MEDIA_ROOT= BASE_DIR / 'media'
 
-STATICFILES_DIRS=[
-   BASE_DIR / 'staticfiles',
-]
+STATICFILES_DIRS=[ BASE_DIR / 'static', ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -131,23 +132,5 @@ AUTH_USER_MODEL= 'users.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-
-# from config.settings.simple_jwt import *
-# from config.settings.cors import *
-# from config.settings.rest_framework import *
-from config.utils.redis import *
-
-
-
-CELERY_BROKER_URL ='redis://redis_db:6379/0' if str(BASE_DIR) == "/app" else 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
-CELERY_TASK_DEFAULT_QUEUE = 'default'
-
-
 
 

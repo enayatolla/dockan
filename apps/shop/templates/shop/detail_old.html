@@ -1,0 +1,340 @@
+<!-- Open Products detail -->
+<section class="bg-light">
+   <div class="container pb-5">
+      <div class="row">
+         <!-- images -->
+         <div class="col-lg-5 mt-5">
+            <div class="card mb-3">
+               <img
+                  class="card-img img-fluid"
+                  src="{{ product.cover.url }}"
+                  alt=""
+                  id="product-detail"
+                  style="
+                     aspect-ratio: 1;
+                     object-fit: cover;
+                     object-position: center top;
+                  "
+               />
+            </div>
+
+            <div class="row w-100">
+               <!--Start Controls-->
+               <div class="col-1 align-self-center">
+                  <a
+                     href="#multi-item-example"
+                     role="button"
+                     data-bs-slide="next"
+                  >
+                     <span class="sr-only">
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           width="40"
+                           height="40"
+                           fill="black"
+                           class="bi bi-chevron-compact-right"
+                           viewBox="0 0 16 16"
+                        >
+                           <path
+                              fill-rule="evenodd"
+                              d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671"
+                           />
+                        </svg>
+                     </span>
+                  </a>
+               </div>
+               <!--End Controls-->
+
+               <!--Start Carousel Wrapper-->
+               <div
+                  id="multi-item-example"
+                  class="col-10 carousel slide carousel-multi-item"
+                  data-bs-ride="carousel"
+               >
+                  <div class="carousel-inner product-links-wap" role="listbox">
+                     <div class="carousel-item active">
+                        <div class="row">
+                           {% for image in product.images.all %}
+
+                           <div class="col-4">
+                              <div>
+                                 <img
+                                    class="card-img img-fluid"
+                                    src="{{ image.image.url }}"
+                                    style="
+                                       aspect-ratio: 1;
+                                       object-fit: cover;
+                                       object-position: center top;
+                                    "
+                                 />
+                              </div>
+                           </div>
+
+                           {% if forloop.counter|divisibleby:3 %}
+                        </div>
+                     </div>
+                     <div id="last_div_wrapper" class="carousel-item">
+                        <div class="row">{% endif %} {% endfor %}</div>
+                     </div>
+                  </div>
+               </div>
+               <!--End Carousel Wrapper-->
+
+               <!--Start Controls-->
+               <div class="col-1 align-self-center">
+                  <a
+                     href="#multi-item-example"
+                     role="button"
+                     data-bs-slide="prev"
+                  >
+                     <span class="sr-only">
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           width="40"
+                           height="40"
+                           fill="black"
+                           class="bi bi-chevron-compact-left"
+                           viewBox="0 0 16 16"
+                        >
+                           <path
+                              fill-rule="evenodd"
+                              d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223"
+                           />
+                        </svg>
+                     </span>
+                  </a>
+               </div>
+               <!--End Controls-->
+            </div>
+         </div>
+         <!-- images end -->
+
+         <!-- start detail -->
+         <div class="col-lg-7 mt-5" style="font-family: Samim">
+            <div class="card">
+               <div class="card-body">
+                  <h1 class="h4" style="color: black">{{ product.title }}</h1>
+
+                  <ul class="list-inline">
+                     <li class="list-inline-item">
+                        <h6>برند : {{ product.brand.title }}</h6>
+                        <h6>دسته بندی : {{ product.category.title }}</h6>
+                     </li>
+                  </ul>
+
+                  <h6>توضیحات :</h6>
+                  <p>{{ product.description }}</p>
+
+                  <h6>مشخصات :</h6>
+                  <ul class="list-unstyled pb-3">
+                     <li>مناسب فصل پاییز</li>
+                     <li>تو کرکی، یقه، سرآستین و پایین لباس کشباف</li>
+                  </ul>
+
+                  <div class="py-2">
+                     <span class="list-inline-item text-dark">
+                        امتیاز :
+                        <span class="reverseToFaFloatNums">4.4</span>
+                        ازبرسی
+                        <span class="reverseToFaIntNums"
+                           >{{ product.comments.all|length }}</span
+                        >
+                        کاربر
+                     </span>
+                  </div>
+
+                  {% with product.types.all|first as first_type %}
+                  <p class="py-2">
+                     <span>قیمت</span>
+                     <span class="reverseToFaIntNums" id="persian_price_detail">
+                        {{ first_type.price }}
+                     </span>
+                     <span>تومان</span>
+                  </p>
+
+                  <p class="py-2">
+                     <span>تعداد در انبار</span>
+                     <span class="reverseToFaIntNums" id="countInStack">
+                        {{ first_type.count_in_stock }}
+                     </span>
+                     <span>عدد</span>
+                  </p>
+                  {% endwith %}
+
+                  <ul class="list-inline">
+                     <h6>رنگ ها :</h6>
+
+                     {% for item in product.group.products.all %}
+                     <li class="list-inline-item">
+                        <a
+                           href="{{ item.get_absolute_url }}"
+                           class="text-muted"
+                        >
+                           <img
+                              src="{{ item.cover.url }}"
+                              style="
+                                 width: 40px;
+                                 height: 40px;
+                                 object-fit: cover;
+                                 object-position: center top;
+                              "
+                           />
+                        </a>
+                     </li>
+                     {% endfor %}
+                  </ul>
+
+                  <!-------- form add_to_cart -------->
+                  <form>
+                     {% csrf_token %}
+                     <input
+                        id="product_id"
+                        type="hidden"
+                        name="product_id"
+                        value="{{ product.id }}"
+                     />
+                     <input
+                        type="hidden"
+                        name="product_size"
+                        id="product_size"
+                        value=""
+                        required
+                        width="30"
+                     />
+                     <input
+                        type="hidden"
+                        name="product_quantity"
+                        id="product_quantity"
+                        value="1"
+                     />
+
+                     <div class="col">
+                        <div class="col-auto">
+                           <ul class="list-inline pb-3">
+                              <h4 class="list-inline-item">اندازه :</h4>
+                              <div>
+                                 {% for type in product.types.all %}
+                                 <li class="list-inline-item">
+                                    <span
+                                       class="btn btn-success sizeSelectorBtn"
+                                       onclick="selectSizeHandler({
+                                             title: '{{ type.title }}',
+                                             price:'{{ type.price }}',
+                                             countInStack: '{{ type.count_in_stock }}'
+                                          })"
+                                       >{{ type.title }}</span
+                                    >
+                                 </li>
+                                 {% endfor %}
+                              </div>
+                           </ul>
+                        </div>
+
+                        <div class="col-auto">
+                           <ul class="list-inline pb-3">
+                              <li class="list-inline-item text-right">تعداد</li>
+                              <li class="list-inline-item">
+                                 <span
+                                    class="btn btn-success"
+                                    id="btn-minus"
+                                    onclick="(function btnMinus() { 
+                                          let tag = document.querySelector('#product_quantity')
+                                          if(tag.value > 1){
+                                             tag.value = parseInt(tag.value) - 1
+                                          }
+                                       })()"
+                                    >-</span
+                                 >
+                              </li>
+                              <li class="list-inline-item">
+                                 <span class="badge bg-secondary" id="var-value"
+                                    >1</span
+                                 >
+                              </li>
+                              <li class="list-inline-item">
+                                 <span
+                                    class="btn btn-success"
+                                    id="btn-plus"
+                                    onclick="(function btnPlus() { 
+                                          let tag = document.querySelector('#product_quantity')
+                                          tag.value = parseInt(tag.value) + 1
+                                       })()"
+                                    >+</span
+                                 >
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+                     <!--  -->
+                     <div class="row pb-3">
+                        <div class="col d-grid">
+                           <button
+                              id="btnBuySubmit"
+                              type="submit"
+                              class="btn btn-success btn-lg disabled"
+                              name="submit"
+                              value="buy"
+                           >
+                              خرید
+                           </button>
+                        </div>
+
+                        <div class="col d-grid">
+                           <button
+                              id="btnAddSubmit"
+                              type="button"
+                              class="btn btn-success btn-lg disabled"
+                           >
+                              افزودن به سبد خرید
+                           </button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!-- Close detail -->
+
+<!-- Related Products -->
+<section class="py-2">
+   <div class="container">
+      <div class="row text-left p-2 pb-3">
+         <h4>محصولات مرتبط</h4>
+      </div>
+
+      <!--Start Carousel Wrapper-->
+      <div style="display: flex; gap: 20px; overflow-x: auto">
+         {% for item in related %}
+
+         <div class="product-wap card rounded-0 mb-3" style="min-width: 200px">
+            <img
+               class="card-img rounded-0 img-fluid"
+               src="{{ item.cover.url }}"
+               style="
+                  width: 100%;
+                  aspect-ratio: 1;
+                  object-fit: cover;
+                  object-position: center top;
+               "
+            />
+
+            <div class="card-body">
+               <a
+                  href="{% url 'shop:product_detail' item.id item.slug|slice:'0:50' %}"
+                  class="h6 text-decoration-none"
+                  >{{ item.title|slice:'0:70' }}</a
+               >
+
+               <p class="text-center mb-0" id="persian_price">
+                  {{ item.price }}
+               </p>
+            </div>
+         </div>
+
+         {% endfor %}
+      </div>
+   </div>
+</section>

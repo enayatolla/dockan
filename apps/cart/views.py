@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import JsonResponse
-from apps.shop.models import Product,ProductType
+from apps.products.models import Product, ProductVariation
 from apps.cart.models import CartItem, Cart, ShippingAddress, Order, OrderItem
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -100,7 +100,7 @@ class HandelCart(APIView):
       size = request.POST.get("product_size")
       quantity = request.POST.get("product_quantity")
       product = Product.objects.get(id=product_id)
-      type = ProductType.objects.filter(product= product, title= size).first()
+      variation = ProductVariation.objects.filter(product= product, title= size).first()
       price = type.price
       
       if request.user.is_authenticated:
@@ -226,7 +226,7 @@ class HandleOrder(APIView):
          )
          for cartItem in cart_items:
             product= Product.objects.get(id=cartItem.product.id)
-            product_type= ProductType.objects.get(id=cartItem.product_type.id)
+            product_type= ProductVariation.objects.get(id=cartItem.product_type.id)
             orderItem= OrderItem.objects.create(
                order= new_order,
                product= product,

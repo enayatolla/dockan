@@ -1,0 +1,49 @@
+{% extends "staff/base.html" %} <br />
+{% load static %} <br />
+
+{% block staff_content %}
+<head>
+   <title>{% block title %}لیست محصولات{% endblock title %}</title>
+</head>
+
+<main class="min-h-screen">
+   <div class="flex justify-between">
+      <h2 class="text-2xl font-bold mb-4 text-right">لیست محصولات</h2>
+
+      <div>
+         <a
+            class="text-sm border rounded px-4 py-2"
+            href="{% url 'staff:new_product' %}"
+         >
+            افزودن محصول جدید
+         </a>
+      </div>
+   </div>
+
+   <section>
+      <ul
+         class="grid grid-cols-2 gap-4 sm:gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 place-items-center"
+      >
+         {% for product in product_list %}
+         <li class="w-40 sm:w-48">
+            <a
+               href="{{ product.get_absolute_url }}"
+               class="w-full flex flex-col items-center justify-center"
+            >
+               <img
+                  src="{{ product.cover.url }}"
+                  loading="lazy"
+                  alt="{{ product.title }}"
+                  class="w-40 aspect-ratio--1x1"
+               />
+               <p class="text-xs text-justify text-sky-500">
+                  {{ product.title }}
+               </p>
+            </a>
+         </li>
+         {% endfor %}
+      </ul>
+   </section>
+</main>
+
+{% endblock staff_content %}

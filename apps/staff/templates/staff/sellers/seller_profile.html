@@ -1,0 +1,163 @@
+{% extends "sellers/seller_base.html" %}<br />
+{% load static %} <br />
+
+{% block seller_panel%}
+<head>
+   <title>{% block title %}حساب کاربری{% endblock title %}</title>
+
+   <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.1.0/dist/css/persian-datepicker.min.css"
+   />
+   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.1.0/dist/js/persian-datepicker.min.js"></script>
+   <script defer>
+      $(document).ready(function () {
+         $(".jalali-datepicker").persianDatepicker({
+            format: "YYYY/MM/DD",
+            autoClose: true,
+            initialValueType: "gregorian",
+         });
+      });
+   </script>
+</head>
+
+<main class="min-h-screen">
+   <h2 class="text-2xl font-bold mb-4 text-right">ویرایش پروفایل</h2>
+
+   {% if messages %}
+   <div
+      class="border border-green-500 rounded text-center max-w-lg my-2 mx-auto"
+   >
+      {% for message in messages %}
+      <p class="text-sm p-2 text-green-500">{{ message }}</p>
+      {% endfor %}
+   </div>
+   {% endif %}
+
+   <div class="w-20 h-20 my-6 rounded-full bg-red-100 overflow-hidden">
+      <img
+         class="object-cover object-center w-20 h-20"
+         src="{{ user.profile.avatar.url }}"
+         loading="lazy"
+      />
+   </div>
+
+   <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'sellers:seller_profile' %}"
+      class="max-w-screen-sm space-y-4"
+   >
+      {% csrf_token %} {{ form.non_field_errors }}
+
+      <div class="flex flex-col gap-1">
+         <div class="w-full flex gap-1 justify-between items-center">
+            <label class="text-sm w-24 sm:w-24 text-gray-800" for="birth_date">
+               تاریخ تولد
+            </label>
+            <p class="flex-1 w-full bg-red-50">{{ form.birth_date }}</p>
+         </div>
+         {{ form.birth_date.errors }}
+      </div>
+
+      <div class="flex flex-col gap-1">
+         <div class="w-full flex gap-1 justify-between items-center">
+            <label class="text-sm w-24 sm:w-24 text-gray-800" for="first_name">
+               نام
+            </label>
+            <p class="flex-1 w-full">{{ form.first_name }}</p>
+         </div>
+         {{ form.first_name.errors }}
+      </div>
+
+      <div class="flex flex-col gap-1">
+         <div class="w-full flex gap-1 justify-between items-center">
+            <label class="text-sm w-24 sm:w-24 text-gray-800" for="last_name">
+               نام خانوادگی
+            </label>
+            <p class="flex-1 w-full">{{ form.last_name }}</p>
+         </div>
+         {{ form.last_name.errors }}
+      </div>
+
+      <div class="flex flex-col gap-1">
+         <div class="flex gap-1 justify-between items-center">
+            <label
+               class="text-sm w-24 sm:w-24 text-gray-800"
+               for="national_code"
+            >
+               کد ملی
+            </label>
+            <p dir="ltr" class="flex-1">{{ form.national_code }}</p>
+         </div>
+         {{ form.national_code.errors }}
+      </div>
+
+      <div class="flex flex-col gap-1">
+         <div class="w-full flex gap-1 items-center justify-between flex-row">
+            <label class="text-sm w-24 sm:w-24 text-gray-800" for="first_name">
+               تصویر پروفایل
+            </label>
+            <p class="flex-1">
+               <label
+                  class="flex items-center justify-center w-full md:w-60 h-28 my-2 rounded-3xl border border-gray-300 border-dashed bg-gray-50 cursor-pointer text-sm"
+                  for="user_avatar_change_btn"
+               >
+                  تصویر پروفایل
+               </label>
+               {{ form.avatar }} {{ form.avatar.errors }}
+            </p>
+         </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+         <div
+            class="w-full flex flex-col gap-1 items-start justify-between sm:flex-row md:items-center"
+         >
+            <label class="text-sm w-36 sm:w-24 text-gray-800" for="bio">
+               توضیحات
+            </label>
+            <p class="flex-1 w-full">{{ form.bio }}</p>
+         </div>
+         {{ form.bio.errors }}
+      </div>
+
+      <div class="flex items-center justify-between">
+         <button
+            class="w-full border border-blue-500 bg-white hover:bg-blue-100 text-blue-500 py-2 px-24 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+            name="submit"
+         >
+            ذخیره
+         </button>
+      </div>
+
+      {% comment %}
+      <div class="mb-4">
+         <label
+            class="block text-gray-700 text-sm font-bold"
+            for="phone_number"
+         >
+            شماره تلفن
+         </label>
+         {{ form.phone_number.errors }} {{ form.phone_number }}
+      </div>
+      <div class="mb-4">
+         <label class="block text-gray-700 text-sm font-bold" for="email">
+            ایمیل
+         </label>
+         {{ form.email.errors }} {{ form.email }}
+      </div>
+      <div class="mb-4">
+         <label class="block text-gray-700 text-sm font-bold" for="username">
+            نام کاربری
+         </label>
+         {{ form.username.errors }} {{ form.username }}
+      </div>
+      {% endcomment %}
+   </form>
+</main>
+
+{% endblock seller_panel %}

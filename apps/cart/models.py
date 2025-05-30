@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Any
 from django.db import models
 from apps.users.models import User, ShippingAddress
-from apps.shop.models import Product, ProductType
+from apps.products.models import Product, ProductVariation
 
 
 
@@ -43,7 +43,7 @@ class OrderItem(models.Model):
    id = models.BigAutoField(primary_key=True, editable=False)
    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True,related_name='order_items')
    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-   product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
+   product_variation = models.ForeignKey(ProductVariation, on_delete=models.SET_NULL, null=True)
    title= models.TextField(max_length=256, null=True)
    quantity = models.IntegerField( default=1, null=True, blank=True)
    price = models.IntegerField(default=0, null=True, blank=True)
@@ -94,12 +94,11 @@ class Cart(models.Model):
       return amount
          
          
-
 class CartItem(models.Model):
    id= models.BigAutoField(primary_key= True, editable=False)
    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_items")
    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-   product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE , null=True)
+   product_variation = models.ForeignKey(ProductVariation, on_delete=models.CASCADE , null=True)
    quantity = models.IntegerField(default=1, null=True, blank=True)
    created_at= models.DateTimeField(auto_now_add= True, null=True, blank=True)
 

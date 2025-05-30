@@ -1,0 +1,29 @@
+{% extends "staff/base.html" %}<br />
+{% load static %} <br />
+
+{% block staff_content %}
+<head>
+   <title>{% block title %} {{ product.title }}{% endblock title %}</title>
+</head>
+
+<main class="min-h-screen">
+   <h2 class="text-2xl font-bold mb-4 text-right">اطلاعات محصول</h2>
+   <button onclick="history.back()" class="border rounded-lg py-2 px-4">
+      back
+   </button>
+
+   <div class="w-40 h-40 my-6 rounded overflow-hidden">
+      <img
+         class="object-cover object-center w-40 h-40"
+         src="{{ product.cover.url }}"
+         loading="lazy"
+      />
+   </div>
+
+   <div>
+      <h2>{{ product.title }}</h2>
+      <h2>{{ product.description }}</h2>
+   </div>
+</main>
+
+{% endblock staff_content %}

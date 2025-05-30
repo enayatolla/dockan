@@ -1,0 +1,152 @@
+{% extends "staff/base.html" %} {% load static %} {% block staff_content %}
+
+<head>
+   <title>{% block title %}افزودن محصول جدید{% endblock title %}</title>
+</head>
+
+<main>
+   <h1 class="text-3xl p-8">افزودن محصول جدید</h1>
+   <button onclick="history.back()" class="border rounded-lg px-4 py-2">back</button>
+
+   <section>
+      <form class="space-y-8 p-6" action="{% url 'staff:new_product' %}" enctype="multipart/form-data" method="post">
+         {% csrf_token %} <br />
+
+         {% for field in product_form %}
+         <!-- condition for image field -->
+         {% if not field.label == 'Cover'%}
+         <div>
+            <span class="">{{ field.label }}</span>
+            <span>{{ field }}</span>
+            <span>{{ field.error }}</span>
+            <hr class="mt-4" />
+         </div>
+         {% else %}
+         <div>
+            <!-- {{ form.cover.label_tag }}  -->
+            <label
+               for="cover_image_tag"
+               class="flex items-center justify-center border-2 border-dotted rounded-lg overflow-hidden w-40 h-40"
+            >
+               {{ product_form.cover }}
+               <span id="image-preview-text">select cover</span>
+               <div id="image-preview-container" style="width: 100%; height: 100%; display: none">
+                  <!-- Placeholder for the image preview -->
+                  <img
+                     id="image-preview"
+                     src=""
+                     alt=""
+                     style="width: 100%; height: 100%; display: none; object-fit: cover; object-position: top center"
+                  />
+               </div>
+            </label>
+            {{ product_form.cover.error }}
+         </div>
+         {% endif %} {% endfor %}
+
+         <section class="border-2 p-4">
+            <h3>Variation</h3>
+            <div id="formset-container" class="space-y-2">
+               {{ formset.management_form }} <br />
+               {% for form in formset %}
+               <div class="formset-item flex items-center gap-10">
+                  {{ form.as_p }}
+                  <button type="button" class="remove-form">X</button>
+               </div>
+               {% endfor %}
+            </div>
+            <button type="button" class="text-xs mt-6" id="add-more">Add Variation</button>
+         </section>
+
+         <button class="p-2 border rounded-lg" type="submit" name="submit">submit</button>
+      </form>
+   </section>
+
+   <script>
+      document.addEventListener("DOMContentLoaded", function () {
+         const imageInput = document.getElementById("cover_image_tag"); // Ensure this ID matches the field's ID
+         const imagePreview = document.getElementById("image-preview");
+         const imagePreviewContainer = document.getElementById("image-preview-container");
+         const imagePreviewText = document.getElementById("image-preview-text");
+
+         if (imageInput) {
+            imageInput.addEventListener("change", function (event) {
+               const file = event.target.files[0]; // Get the selected file
+
+               if (file) {
+                  const reader = new FileReader(); // Initialize FileReader
+
+                  // When the file is loaded
+                  reader.onload = function (e) {
+                     imagePreview.src = e.target.result; // Set the preview image src
+                     imagePreview.style.display = "block"; // Make the image visible
+                     imagePreviewText.style.display = "none"; // Make the image visible
+                     imagePreviewContainer.style.display = "block"; // Make the image visible
+                  };
+
+                  reader.readAsDataURL(file); // Read the file as a data URL
+               } else {
+                  // Reset preview if no file is selected
+                  imagePreview.src = "";
+                  imagePreview.style.display = "none";
+               }
+            });
+         }
+      });
+   </script>
+
+   <script>
+      document.addEventListener("DOMContentLoaded", function () {
+         const formsetContainer = document.getElementById("formset-container");
+         const addMoreButton = document.getElementById("add-more");
+
+         const totalForms = document.getElementById("id_variations-TOTAL_FORMS"); // Adjust 'id_images' to match your formset prefix
+         const formTemplate = formsetContainer.querySelector(".formset-item").cloneNode(true);
+
+         // Clear the values in the cloned form
+         formTemplate.querySelectorAll("input, select, textarea").forEach((input) => {
+            input.value = ""; // Clear input values
+            const name = input.getAttribute("name");
+            if (name) {
+               input.setAttribute("name", name.replace("-0-", `-${totalForms.value}-`));
+            }
+            const id = input.getAttribute("id");
+            if (id) {
+               input.setAttribute("id", id.replace("-0-", `-${totalForms.value}-`));
+            }
+         });
+
+         addMoreButton.addEventListener("click", function () {
+            const newForm = formTemplate.cloneNode(true);
+            const formCount = parseInt(totalForms.value, 10);
+
+            // Update the new form's input names and IDs
+            newForm.querySelectorAll("input, select, textarea, label").forEach((element) => {
+               if (element.name) {
+                  element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
+               }
+               if (element.id) {
+                  element.id = element.id.replace(/-\d+-/, `-${formCount}-`);
+               }
+               if (element.htmlFor) {
+                  element.htmlFor = element.htmlFor.replace(/-\d+-/, `-${formCount}-`);
+               }
+            });
+
+            formsetContainer.appendChild(newForm);
+            totalForms.value = formCount + 1; // Increment the TOTAL_FORMS value
+         });
+
+         formsetContainer.addEventListener("click", function (event) {
+            if (event.target.classList.contains("remove-form")) {
+               event.target.closest(".formset-item").remove();
+
+               // Update TOTAL_FORMS after removing a form
+               const forms = formsetContainer.querySelectorAll(".formset-item");
+               totalForms.value = forms.length;
+            }
+         });
+      });
+   </script>
+</main>
+{% endblock staff_content %}

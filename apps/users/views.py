@@ -24,13 +24,9 @@ class UserRegisterView(TemplateView):
          return redirect("shop:home_page")
       
       form = UserCreationForm(request.POST)
-      print("BEFORE is_valid()")
       if form.is_valid():
-         print("AFTER is_valid()")
-         print("BEFOR form.save()")
          user = form.save()
          login(request, user)
-         print("AFTER form.save()")
          return redirect("shop:home_page")
          
       return render(request, 'users/auth-register-basic.html', context={"form": form})
@@ -80,7 +76,7 @@ def user_register (request):
 
 class UserLogin(TemplateView):
    def get(self, request):
-      if request.user.is_authenticated :
+      if request.user.is_authenticated:
             return redirect("shop:home_page")
       
       return render(request, 'users/auth-login-basic.html', context={})

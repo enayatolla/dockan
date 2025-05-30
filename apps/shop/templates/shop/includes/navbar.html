@@ -39,10 +39,7 @@
                   style="z-index: 10"
                >
                   <h5 id="offcanvasBackdropLabel" class="offcanvas-title">
-                     <a
-                        class="navbar-brand text-success logo mx-5"
-                        href="{% url 'shop:home_page' %}"
-                     >
+                     <a class="navbar-brand text-success logo mx-5" href="/">
                         جورگر
                      </a>
                   </h5>
@@ -61,36 +58,16 @@
                         class="nav navbar-nav d-flex justify-content-between mx-xl-auto"
                      >
                         <li class="nav-item">
-                           <a
-                              class="nav-link"
-                              href="{% url 'shop:product_list' %}"
-                           >
-                              حراج شده
-                           </a>
+                           <a class="nav-link" href="/"> حراج شده </a>
                         </li>
                         <li class="nav-item">
-                           <a
-                              class="nav-link"
-                              href="{% url 'shop:product_list' %}"
-                           >
-                              پرفروش ترین
-                           </a>
+                           <a class="nav-link" href="/"> پرفروش ترین </a>
                         </li>
                         <li class="nav-item">
-                           <a
-                              class="nav-link"
-                              href="{% url 'shop:product_list' %}"
-                           >
-                              صفحه محصولات
-                           </a>
+                           <a class="nav-link" href="/"> صفحه محصولات </a>
                         </li>
                         <li class="nav-item">
-                           <a
-                              class="nav-link"
-                              href="{% url 'shop:product_list' %}"
-                           >
-                              دسته بندی
-                           </a>
+                           <a class="nav-link" href="/"> دسته بندی </a>
                         </li>
                      </ul>
                   </div>
@@ -115,24 +92,16 @@
       <div class="flex-fill">
          <ul class="nav navbar-nav d-flex justify-content-center mx-xl-auto">
             <li class="nav-item">
-               <a class="nav-link" href="{% url 'shop:product_list' %}">
-                  حراج شده
-               </a>
+               <a class="nav-link" href="/"> حراج شده </a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="{% url 'shop:product_list' %}">
-                  پرفروش ترین
-               </a>
+               <a class="nav-link" href="/"> پرفروش ترین </a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="{% url 'shop:product_list' %}">
-                  صفحه محصولات
-               </a>
+               <a class="nav-link" href="/"> صفحه محصولات </a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" href="{% url 'shop:product_list' %}">
-                  دسته بندی
-               </a>
+               <a class="nav-link" href="/"> دسته بندی </a>
             </li>
          </ul>
       </div>
@@ -146,7 +115,7 @@
          class=""
          dir="rtl"
          method="get"
-         action="{% url 'shop:search' %}"
+         action="/"
          style="
             border: 1.5px solid grey;
             border-radius: 3px;

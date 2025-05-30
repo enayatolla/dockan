@@ -1,0 +1,149 @@
+{% extends "sellers/seller_base.html" %}<br />
+{% load static %} <br />
+{% load jalali_filters %} <br />
+
+{% block seller_panel%}
+<head>
+   <title>{% block title %}لیست سفارشات{% endblock title %}</title>
+</head>
+
+<main class="min-h-screen">
+   <h2 class="text-2xl font-bold mb-4 text-right">لیست سفارشات</h2>
+
+   <ul class="space-y-2">
+      {% for order in order_list %}
+      <li>
+         <div class="rounded-lg border-2 border-gray-300">
+            <a href="{{ order.get_absolute_url }}">
+               <div class="p-4">
+                  <div class="flex items-center justify-between pb-6">
+                     <div class="flex items-center gap-x-2 text-emerald-500">
+                        {% if order.is_ready %}
+                        <p>سفارش آماده ارسال</p>
+                        {% else %}
+                        <p>سفارش جدید</p>
+                        {% endif %}
+                     </div>
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xml:space="preserve"
+                        width="10"
+                        height="20"
+                        shape-rendering="geometricPrecision"
+                        text-rendering="geometricPrecision"
+                        image-rendering="optimizeQuality"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        viewBox="0 0 298 511.93"
+                     >
+                        <path
+                           fill-rule="nonzero"
+                           d="M285.77 441c16.24 16.17 16.32 42.46.15 58.7-16.16 16.24-42.45 16.32-58.69.16l-215-214.47c-16.24-16.16-16.32-42.45-.15-58.69L227.23 12.08c16.24-16.17 42.53-16.09 58.69.15 16.17 16.24 16.09 42.54-.15 58.7l-185.5 185.04L285.77 441z"
+                        />
+                     </svg>
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row gap-4">
+                     <!-- Order Data -->
+                     <div class="flex flex-col gap-4 w-full sm:w-64 text-xs">
+                        <div class="flex items-center justify-between">
+                           <div class="">شماره سفارش</div>
+                           <div class="">#{{ order.id }}</div>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-x-2">
+                           <span class="text-gray-500 ml-4">نوع پرداخت</span>
+                           {% if order.is_online_pay %}
+                           <span class="text-emerald-500">پرداخت آنلاین</span>
+                           {% else %}
+                           <span class="text-blue-500">پرداخت درب منزل</span>
+                           {% endif %}
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                           <span class="text-gray-500 ml-4">وضعیت پرداخت</span>
+                           {% if order.is_paid %}
+                           <span class="text-emerald-500">پرداخت شده</span>
+                           {% else %}
+                           <span class="text-yellow-500">پرداخت نشده</span>
+                           {% endif %}
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                           <div class="text-sm">مبلغ کل</div>
+                           <div class="text-emerald-500 dark:text-emerald-400">
+                              <span class=""> {{ order.total_price }} </span>
+                              <span class="text-xs mr-1">تومان</span>
+                           </div>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-x-2">
+                           <div class="">تاریخ</div>
+                           <div class="">
+                              <span class="text-sky-500">
+                                 {{ order.created_at|jalali_date }}
+                              </span>
+                           </div>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-x-2">
+                           <div class="">ساعت</div>
+                           <div class="">
+                              <span class="text-sky-500">
+                                 {{ order.created_at|jalali_time }}
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="flex flex-grow flex-col gap-y-4">
+                        <div class="flex items-center justify-between gap-x-2">
+                           <span class="ml-4">وضعیت ارسال</span>
+                           {% if order.is_delivered %}
+                           <span class="text-green-500">تحویل داده شد</span>
+                           {% elif order.is_sending %}
+                           <span class="text-blue-400">ارسال شده است</span>
+                           {% else %}
+                           <span class="text-yellow-500">در حال برسی</span>
+                           {% endif %}
+                        </div>
+
+                        <div
+                           class="relative h-2 w-full rounded-full bg-gray-200"
+                        >
+                           <span
+                              class="absolute inset-y-0 right-0 w-[30%] rounded-full bg-yellow-500"
+                           ></span>
+                        </div>
+
+                        <div
+                           class="flex items-center justify-between text-sm text-yellow-500"
+                        >
+                           <span> 11 / 06 / 1402 </span>
+                           <span> ساعت 08 : 20 </span>
+                        </div>
+
+                        <div class="border rounded-lg px-6">
+                           <ul class="flex flex-row gap-2 overflow-x-auto">
+                              {% for order_item in order.order_items.all %}
+                              <li>
+                                 <img
+                                    class="w-20"
+                                    src="{{ order_item.product.cover.url }}"
+                                    loading="lazy"
+                                 />
+                              </li>
+                              {% endfor %}
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </a>
+         </div>
+      </li>
+      {% endfor %}
+   </ul>
+</main>
+
+{% endblock seller_panel %}
