@@ -1,10 +1,10 @@
 from pathlib import Path
-
+from dotenv import load_dotenv
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-SECRET_KEY = 'django-insecure-)np=hkxkob)t(7u#s7&#pvrn&(%46+uej-6#-ob417pp__kwq8'
 ALLOWED_HOSTS = ['*']
-INTERNAL_IPS = [ "127.0.0.1", ]
+INTERNAL_IPS = [ "127.0.0.1",]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -19,7 +19,6 @@ THIRD_PARTY_APPS = [
     'django_browser_reload',
 ]
 LOCAL_APPS = [
-    'apps.apis',
     'apps.shop',
     'apps.cart',
     'apps.users',
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
 APPLY_MIDDLEWARE=[
     'apps.shop.middleware.ShopMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
