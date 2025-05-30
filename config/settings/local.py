@@ -11,4 +11,8 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-1234567890abcdefghi
 ALLOWED_HOSTS = ['*']
 
 
-
+DATABASES = {
+   'default': dj_database_url.config(
+      default= os.getenv('DJNAGO_DATABASE_URL'),
+   )
+}

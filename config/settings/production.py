@@ -13,7 +13,6 @@ DATABASES = {
       default= os.getenv('DJNAGO_DATABASE_URL'),
    )
 }
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
