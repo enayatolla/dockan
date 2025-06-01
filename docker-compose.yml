@@ -1,17 +1,17 @@
 version: "3.8"
 
 services:
-   postgre:
-      image: postgres:15.4
-      container_name: postgres
-      volumes:
-         - dokkan_postgres_db:/var/lib/postgresql/data
-      environment:
-         POSTGRES_USER: postgres
-         POSTGRES_PASSWORD: postgres
-         POSTGRES_DB: shop
-      networks:
-         - dockannet
+   # postgre:
+   #    image: postgres:15.4
+   #    container_name: postgres
+   #    volumes:
+   #       - dokkan_postgres_db:/var/lib/postgresql/data
+   #    environment:
+   #       POSTGRES_USER: postgres
+   #       POSTGRES_PASSWORD: postgres
+   #       POSTGRES_DB: shop
+   #    networks:
+   #       - dockannet
 
    django:
       build: .
@@ -24,8 +24,8 @@ services:
          - 8000:8000
       networks:
          - dockannet
-      depends_on:
-         - postgre
+      env_file:
+         - .env
 
 networks:
    dockannet:
