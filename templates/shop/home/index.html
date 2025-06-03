@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% load static %}
+
+<title>{% block title %} {{ title }} {% endblock %}</title>
+
+{% block content %}
+
+<div class="flex min-h-screen flex-col">
+   <!-- include Navbar -->
+   {% include 'includes/navbar.html' %}
+
+   <main class="flex-grow bg-gray-100 pb-14 pt-36 dark:bg-black xs:pt-36">
+      <!-- Main Banners section Start -->
+      {% include 'shop/home/main_banner.html' %}
+
+      <!-- Special Products section Start -->
+      {% include 'shop/home/special_products.html' %}
+
+      <!-- Newest Products section Start -->
+      {% include 'shop/home/newest_products.html' %}
+
+      <!-- Category Banners section Start -->
+      {% include 'shop/home/category_banners.html' %}
+
+      <!-- Category section Start -->
+      {% include 'shop/home/category.html' %}
+
+      <!-- BestSeller Products section Start -->
+      {% include 'shop/home/best_seller.html' %}
+
+      <!-- Blog section Start -->
+      {% include 'shop/home/blog.html' %}
+   </main>
+</div>
+
+<!-- Start Footer -->
+{% include 'includes/footer.html' %}
+<!-- End Footer -->
+
+{% endblock content %}

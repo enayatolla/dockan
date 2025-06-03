@@ -19,6 +19,3 @@ urlpatterns =[
 
 
 
-
-
-

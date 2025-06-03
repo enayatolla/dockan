@@ -133,4 +133,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-
+TAILWIND_APP_NAME = 'theme'
+from shutil import which
+NPM_BIN_PATH = which('npm')

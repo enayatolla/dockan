@@ -1,18 +1,30 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      {% tailwind_css %}
+      <link rel="icon" type="image/x-icon" href="{% static 'images/logo-8.png' %}" style="border-radius: 50%" />
+
+      <link href="{% static 'assets/css/fonts.css' %}" rel="stylesheet" />
+      <link href="{% static 'assets/css/dependencies/swiper.min.css' %}" rel="stylesheet" />
+      <link href="{% static 'assets/css/theme.css' %}" rel="stylesheet" />
+      <link href="{% static 'assets/css/app.css' %}" rel="stylesheet" />
+
+      <script defer src="{% static 'assets/scripts/dependencies/flowbite.min.js' %}"></script>
+      <script defer src="{% static 'assets/scripts/dependencies/swiper.min.js' %}"></script>
+      <script defer src="{% static 'assets/scripts/app.js' %}"></script>
+      <script>
+         // Set Theme from Localstorage at site load
+         document.documentElement.classList.toggle("dark", localStorage.getItem("theme") === "dark");
+      </script>
+
+      {% include 'includes/sr-only.html' %}
+      <title>{% block title %}{% endblock title %}</title>
    </head>
 
    <body class="bg-gray-50 font-serif leading-normal tracking-normal">
-      <div class="container mx-auto">
-         <section class="flex items-center justify-center h-screen">
-            <h1 class="text-5xl">Django + Tailwind = ❤️</h1>
-         </section>
-      </div>
+      {% block content %} {% endblock content %}
    </body>
 </html>

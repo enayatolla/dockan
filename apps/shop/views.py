@@ -68,19 +68,6 @@ class ProductDetailView(View):
       return render(request, "shop/product_detail.html", context )
    
 
-# class SearchView(View):
-#    def get(self, request, **kwags):
-   
-#       taskCelery.delay()
-   
-#       brand_list = Brand.objects.all().order_by('-created_at')
-#       product_list = Product.objects.all().order_by("-created_at")
-#       context={"object_list": product_list, "brand_list": brand_list}
-      
-#       return render(request, "shop/product_list.html", context)
-
-
-
 
 
 
