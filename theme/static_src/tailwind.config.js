@@ -41,9 +41,6 @@ module.exports = {
        * and make sure the pattern below matches your project structure.
        */
       // '../../**/*.py'
-      "./public/**/*.{html,js}",
-      "./public/assets/**/*.{html,js}",
-      "./public/components.html",
    ],
    plugins: [
       /**
@@ -55,7 +52,6 @@ module.exports = {
       require("@tailwindcss/typography"),
       require("@tailwindcss/aspect-ratio"),
    ],
-   content: ["./public/**/*.{html,js}", "./public/assets/**/*.{html,js}", "./public/components.html"],
    darkMode: "class",
    theme: {
       screens: {
