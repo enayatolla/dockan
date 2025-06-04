@@ -10,6 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install setuptools
 RUN chmod a+x build.sh
 
 # Expose port 8000 for the application
