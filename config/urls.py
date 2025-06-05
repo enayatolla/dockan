@@ -8,6 +8,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^i18n/', include('django.conf.urls.i18n')), #Adds Persian language support
 
+
+
     path('' , include("apps.shop.urls", namespace= 'shop')),
     path('checkout/' , include("apps.cart.urls"), name='checkout'),
     path('users/' , include("apps.users.urls"), name='users'),

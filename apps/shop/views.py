@@ -44,28 +44,18 @@ class HomePageView(View):
 
 class ProductDetailView(View):
    def get(self, request, pk, slug ):
-      # from django.core.cache import cache
-      # cache.clear()
- 
       product = Product.objects.get(id = pk)
       # prefetch_related: catch reverse query
       # select_related: catch ForeignKey fields query
       product_list = Product.objects \
-         .only() \
-         .defer() \
          .prefetch_related('variations') \
          .select_related('brand', 'category')
       
       product_list = Product.objects.prefetch_related('variations').select_related('brand', 'category')
 
       context={"related": product_list, "product": product} 
-      return render(request, "shop/product_detail.html", context )
+      return render(request, "shop/product_detail/index.html", context )
    
-   def post(self, request, pk, slug):
-      product = Product.objects.get(id = pk)
-      product_list = Product.objects.all()
-      context={"related": product_list, "product": product} 
-      return render(request, "shop/product_detail.html", context )
    
 
 

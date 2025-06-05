@@ -15,11 +15,12 @@
       <link href="{% static 'assets/css/fonts.css' %}" rel="stylesheet" />
       <link href="{% static 'assets/css/dependencies/swiper.min.css' %}" rel="stylesheet" />
       <link href="{% static 'assets/css/theme.css' %}" rel="stylesheet" />
-      <link href="{% static 'assets/css/app.css' %}" rel="stylesheet" />
+      <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" />
 
       <script defer src="{% static 'assets/scripts/dependencies/flowbite.min.js' %}"></script>
       <script defer src="{% static 'assets/scripts/dependencies/swiper.min.js' %}"></script>
       <script defer src="{% static 'assets/scripts/app.js' %}"></script>
+      <script defer src="{% static 'assets/scripts/custom.js' %}"></script>
       <script>
          // Set Theme from Localstorage at site load
          document.documentElement.classList.toggle("dark", localStorage.getItem("theme") === "dark");
@@ -27,9 +28,10 @@
 
       {% include 'includes/sr-only.html' %}
       <title>{% block title %}{% endblock title %}</title>
+      {% tailwind_css %}
    </head>
 
-   <body class="bg-gray-50 font-serif leading-normal tracking-normal">
+   <body>
       {% block content %} {% endblock content %}
    </body>
 </html>

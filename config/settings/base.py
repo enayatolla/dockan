@@ -11,12 +11,12 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'django_cleanup.apps.CleanupConfig',
-    'django_render_partial',
-    'django_social_share',
+    'django.contrib.postgres',
     'django_celery_beat',
     'tailwind',
     'theme',
     'django_browser_reload',
+     'mptt',
 ]
 LOCAL_APPS = [
     'apps.shop',
@@ -26,6 +26,9 @@ LOCAL_APPS = [
     'apps.staff',
 ]
 INSTALLED_APPS = [
+    # "admin_interface",
+    # 'colorfield',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,14 +108,20 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'fa'  # Persian (Iran)
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
-
+# Available languages
+from django.utils.translation import gettext_lazy as _
+LANGUAGES = [
+    ('fa', _('Persian')),
+    ('en', _('English')),
+]
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',  # or os.path.join(BASE_DIR, 'locale')
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -136,3 +145,10 @@ AUTHENTICATION_BACKENDS = [
 TAILWIND_APP_NAME = 'theme'
 from shutil import which
 NPM_BIN_PATH = which('npm')
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://www.dokkanchi.shop",
+    "https://dokkanchi.shop",
+]

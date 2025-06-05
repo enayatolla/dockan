@@ -4,11 +4,7 @@
    <div class="container relative">
       <!-- Section Header -->
       <div class="mb-4 flex items-center justify-between">
-         <h3
-            class="font-medium text-zinc-700 dark:text-white md:text-lg lg:text-xl"
-         >
-            پیشنهادات ویژه
-         </h3>
+         <h3 class="font-medium text-zinc-700 dark:text-white md:text-lg lg:text-xl">پیشنهادات ویژه</h3>
          <a
             class="flex items-center gap-x-2 py-2 text-sm text-emerald-500 dark:text-emerald-400 lg:text-base"
             href="/shop"
@@ -31,17 +27,11 @@
                <div
                   class="border-gradient group relative rounded-base p-px before:absolute before:-inset-px before:h-[calc(100%+2px)] before:w-[calc(100%+2px)] before:rounded-base"
                >
-                  <div
-                     class="relative rounded-xl bg-white p-2 shadow-base dark:bg-zinc-900 md:p-5"
-                  >
+                  <div class="relative rounded-xl bg-white p-2 shadow-base dark:bg-zinc-900 md:p-5">
                      <!-- image -->
                      <div class="mb-2 md:mb-5" draggable="false">
                         <a href="{{ product.get_absolute_url }}">
-                           <img
-                              alt=""
-                              class="mx-auto w-32 rounded-lg md:w-auto"
-                              src="{{ product.cover.url }}"
-                           />
+                           <img alt="" class="mx-auto w-32 rounded-lg md:w-auto" src="{{ product.cover.url }}" />
                         </a>
                      </div>
                      <!-- title -->
@@ -60,7 +50,7 @@
                            <del
                               class="text-sm text-zinc-500 decoration-red-600 dark:text-zinc-400 dark:decoration-red-500 md:text-base"
                            >
-                              10,000,000
+                              {{ product.base_price }}
                            </del>
                         </div>
                         <div class="flex items-center justify-between">
@@ -72,13 +62,9 @@
                               </p>
                            </div>
                            <!-- New price -->
-                           <div
-                              class="text-sm font-bold text-emerald-500 dark:text-emerald-400 md:text-base"
-                           >
-                              4,000,000
-                              <span class="text-xs font-light md:text-sm"
-                                 >تومان</span
-                              >
+                           <div class="text-sm font-bold text-emerald-500 dark:text-emerald-400 md:text-base">
+                              {{ product.base_price }}
+                              <span class="text-xs font-light md:text-sm">تومان</span>
                            </div>
                         </div>
                      </div>
