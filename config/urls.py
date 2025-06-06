@@ -6,9 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^i18n/', include('django.conf.urls.i18n')), #Adds Persian language support
-
-
+    re_path(r'^i18n/', include('django.conf.urls.i18n')),
 
     path('' , include("apps.shop.urls", namespace= 'shop')),
     path('checkout/' , include("apps.cart.urls"), name='checkout'),

@@ -31,7 +31,13 @@ RUN poetry check
 RUN poetry install
 # Copy Application
 COPY . /app
-RUN chmod a+x build.sh
+
+COPY build.sh /app/build.sh
+RUN chmod +x /app/build.sh
+
 EXPOSE 8000
 
 CMD ["./build.sh"]
+
+
+
