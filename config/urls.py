@@ -8,8 +8,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^i18n/', include('django.conf.urls.i18n')), #Adds Persian language support
 
-
-
     path('' , include("apps.shop.urls", namespace= 'shop')),
     path('checkout/' , include("apps.cart.urls"), name='checkout'),
     path('users/' , include("apps.users.urls"), name='users'),
@@ -20,9 +18,9 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns= [
         path("__reload__/", include("django_browser_reload.urls")),
+        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
     ] + urlpatterns
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 

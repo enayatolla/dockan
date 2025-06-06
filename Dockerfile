@@ -25,6 +25,13 @@ RUN node -v && npm -v
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 WORKDIR /app
+COPY poetry.lock pyproject.toml README.md ./
+# [OPTIONAL] Validate the project is properly configured
+RUN poetry check
+RUN poetry install
+# Copy Application
 COPY . /app
 RUN chmod a+x build.sh
+EXPOSE 8000
+
 CMD ["./build.sh"]

@@ -15,8 +15,7 @@ THIRD_PARTY_APPS = [
     'django_celery_beat',
     'tailwind',
     'theme',
-    'django_browser_reload',
-     'mptt',
+    'mptt',
 ]
 LOCAL_APPS = [
     'apps.shop',
@@ -41,7 +40,6 @@ INSTALLED_APPS = [
 
 APPLY_MIDDLEWARE=[
     'apps.shop.middleware.ShopMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware', 
 ]
 MIDDLEWARE = [

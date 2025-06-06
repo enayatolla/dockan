@@ -2608,11 +2608,7 @@
    >
       <div class="mb-6 flex items-center justify-between gap-x-4 border-b border-gray-100 pb-5 dark:border-white/5">
          <!-- Logo -->
-         <div>
-            <a href="/">
-               <img alt="" class="h-10 w-full rounded-lg" src="{% static 'assets/images/logo.svg' %}" />
-            </a>
-         </div>
+         <div>{% include 'includes/logo.html' %}</div>
 
          <!-- Close Button -->
          <button

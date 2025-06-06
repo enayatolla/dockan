@@ -171,5 +171,3 @@ class ProductDescription(models.Model):
 
 
 
-
-
