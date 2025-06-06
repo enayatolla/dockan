@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-DEBUG = True
+DEBUG = False
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'default_secret_key')
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
 DATABASES = {
@@ -13,6 +13,6 @@ DATABASES = {
       default= os.getenv('DJNAGO_DATABASE_URL'),
    )
 }
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
